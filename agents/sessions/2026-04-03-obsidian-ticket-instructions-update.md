@@ -12,7 +12,7 @@
 
 - Updated `AGENTS.md` to codify single-file work tickets under `tickets/{status}/{ticket}.md`
 - Added explicit work-ticket section order guidance: `Status`, `Goal`, `Jira Snapshot`, `Development Metadata`, `Notes`
-- Marked [[work/alfa-bank/tickets/active/utk2-3264|UTK2-3264]] as the canonical ticket example
+- Marked [[work/alfa-bank/tickets/utk2-3264|UTK2-3264]] as the canonical ticket example
 - Clarified that `Development Metadata` should contain only durable tracking facts
 - Clarified that intermediate implementation details and detailed validation belong in agent project and session notes
 - Updated the `obsidian-vault-workflow` skill to match the same ticket model and examples

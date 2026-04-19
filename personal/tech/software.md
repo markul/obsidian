@@ -2,7 +2,9 @@
 
 ## Related Notes
 
+- [[personal/tech/index|Tech]]
 - [[personal/tech/Infrastructure|Infrastructure]]
+- [[personal/learning/ai/index|AI]]
 
 ## optiplex.markul.net
 

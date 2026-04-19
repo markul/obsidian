@@ -10,7 +10,7 @@
 - Repo: `/home/marat/dev/git/alfa/utk-mcp`
 - Related notes:
   - [[daily/2026-04-01]]
-  - [[work/alfa-bank/tickets/on-hold/utk2-3243|UTK2-3243]]
+  - [[work/alfa-bank/tickets/utk2-3243|UTK2-3243]]
 
 ## Actions
 

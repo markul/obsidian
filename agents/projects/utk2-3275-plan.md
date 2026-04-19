@@ -3,7 +3,7 @@
 ## Summary
 
 - Supporting note for the canonical project: [[agents/projects/utk2-3275|UTK2-3275]].
-- Create the agent project note `agents/projects/utk2-3275.md` in the vault with `#status/active`, linked from the existing ticket note, and record the phased rollout below.
+- Create the agent project note `agents/projects/utk2-3275.md` in the vault with `status: active` in properties, linked from the existing ticket note, and record the phased rollout below.
 - Deliver `UTK2-3275` in two implementation phases:
   - Phase 1: add inbox infrastructure to `skp-product-change-workflow-service`.
   - Phase 2: add the `DwhClientResultEventHandler` business logic that stores client negatives.

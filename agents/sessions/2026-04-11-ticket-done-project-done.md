@@ -10,7 +10,7 @@ tags:
 - Vault: `/home/marat/dev/git/markul/obsidian`
 - Related notes:
   - [[agents/projects/utk2-3264|UTK2-3264 Agent Work]]
-  - [[work/alfa-bank/tickets/done/utk2-3264|UTK2-3264]]
+  - [[work/alfa-bank/tickets/utk2-3264|UTK2-3264]]
 
 ## Goal
 
@@ -25,7 +25,7 @@ tags:
 
 ## Findings
 
-- `UTK2-3264` was the only current mismatch: its ticket note was already under `work/alfa-bank/tickets/done/`, but the agent project still used `status/active`
+- `UTK2-3264` was the only current mismatch: its ticket note was already under `work/alfa-bank/tickets/`, but the agent project still used `status/active`
 - `UTK2-3274` was already aligned as `done`
 
 ## Decisions

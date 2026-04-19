@@ -3,6 +3,13 @@
 Reference: `/home/marat/dev/git/markul/opencode/docs/agents.md`
 Agent project: [[agents/projects/opencode|OpenCode Multi-Agent]]
 
+## Related Notes
+
+- [[personal/learning/ai/index|AI]]
+- [[personal/learning/ai/second-brain|Second Brain]]
+- [[agents/projects/opencode|OpenCode Multi-Agent]]
+- [[personal/tech/software|Software]]
+
 ## Global Agent Config — Single Point of Truth
 
 - Shared personal agent guidance should live under `~/.agents/`

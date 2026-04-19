@@ -1,7 +1,11 @@
 ---
 tags:
   - agents/project
-  - status/active
+note-type: agent-project
+status: active
+created: 2026-04-03T19:00
+completed: 
+related-ticket: 
 ---
 
 # OpenCode Multi-Agent
@@ -28,6 +32,7 @@ tags:
 ## Scope
 
 - Practice repo: `/home/marat/dev/git/markul/opencode`
+- Hub note: [[personal/learning/ai/index|AI]]
 - Learning note: [[personal/learning/ai/multi-agent|multi-agent]]
 - Related notes:
   - [[daily/2026-04-03]]

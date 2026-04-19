@@ -12,7 +12,7 @@ tags:
 - Related notes:
   - [[agents/projects/utk2-3275|UTK2-3275]]
   - [[agents/projects/utk2-3275-plan|UTK2-3275 plan]]
-  - [[work/alfa-bank/tickets/active/utk2-3275|UTK2-3275]]
+  - [[work/alfa-bank/tickets/utk2-3275|UTK2-3275]]
   - [[daily/2026-04-11]]
 
 ## Goal

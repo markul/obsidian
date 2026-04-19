@@ -1,7 +1,11 @@
 ---
 tags:
   - agents/project
-  - status/active
+note-type: agent-project
+status: active
+created: 2026-04-02T19:22
+completed: 
+related-ticket: 
 ---
 
 # My Infra
@@ -27,6 +31,7 @@ tags:
 
 ## Scope
 
+- Hub note: [[personal/tech/index|Tech]]
 - Area note: [[personal/tech/Infrastructure|Infrastructure]]
 - Related notes:
   - [[personal/tech/hardware|hardware]]

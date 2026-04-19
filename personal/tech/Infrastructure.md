@@ -2,6 +2,7 @@
 
 ## Related Notes
 
+- [[personal/tech/index|Tech]]
 - [[agents/projects/my-infra|My Infra]]
 - [[personal/tech/software|Software]]
 

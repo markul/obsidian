@@ -10,7 +10,7 @@ tags:
 - Repo: `/home/marat/dev/git/alfa/skp-product-change-workflow-service`
 - Related notes:
   - [[agents/projects/utk2-3274|UTK2-3274]]
-  - [[work/alfa-bank/tickets/done/utk2-3274|UTK2-3274]]
+  - [[work/alfa-bank/tickets/utk2-3274|UTK2-3274]]
 
 ## Goal
 

@@ -1,12 +1,16 @@
 ---
 tags:
   - agents/project
-  - status/new
+note-type: agent-project
+status: new
+created: YYYY-MM-DDTHH:MM
+completed: 
+related-ticket: 
 ---
 
 # Project
 
-Use this file as `project.md` inside a stable project directory such as `agents/projects/example/`.
+Use this file as a single stable project note at `agents/projects/{name}.md`.
 
 ## Status
 
@@ -21,27 +25,27 @@ Use this file as `project.md` inside a stable project directory such as `agents/
 
 - 
 
+## Plan
+
+1. 
+
 ## Scope
-
-- 
-
-## Context
 
 - Repo:
 - Related notes:
 
-## Active Work
+## Validation
 
-- [ ] 
+- 
 
-## Decisions
+## Current State
+
+- 
+
+## Key Decisions
 
 - 
 
 ## Blockers
-
-- 
-
-## Next Step
 
 - 

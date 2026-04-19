@@ -1,7 +1,11 @@
 ---
 tags:
   - agents/project
-  - status/done
+note-type: agent-project
+status: done
+created: 2026-03-31T00:00
+completed: 2026-03-31T00:00
+related-ticket: 
 ---
 
 # Obsidian Vault Sync

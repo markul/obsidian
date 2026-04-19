@@ -1,7 +1,11 @@
 ---
 tags:
   - agents/project
-  - status/active
+note-type: agent-project
+status: active
+created: 2026-04-01T13:30
+completed: 
+related-ticket: 
 ---
 
 # UTK PWR

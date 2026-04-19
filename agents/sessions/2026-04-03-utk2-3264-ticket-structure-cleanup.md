@@ -2,7 +2,7 @@
 
 ## Scope
 
-- Ticket: [[work/alfa-bank/tickets/active/utk2-3264|UTK2-3264]]
+- Ticket: [[work/alfa-bank/tickets/utk2-3264|UTK2-3264]]
 - Project: [[agents/projects/utk2-3264|UTK2-3264 agent project]]
 
 ## Goal

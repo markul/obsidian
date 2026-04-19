@@ -8,7 +8,7 @@
 ## Scope
 
 - Agent project: [[agents/projects/utk2-3243|UTK2-3243 Agent Work]]
-- Ticket: [[work/alfa-bank/tickets/on-hold/utk2-3243|UTK2-3243]]
+- Ticket: [[work/alfa-bank/tickets/utk2-3243|UTK2-3243]]
 - Repo: `/home/marat/dev/git/alfa/ufr-kpnsb-product-request-workflow-service`
 - Branch: `feature/UTK2-3243`
 

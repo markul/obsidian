@@ -1,6 +1,10 @@
 ---
 tags:
   - agents/session
+note-type: agent-session
+session-date: 2026-04-11
+related-project: "[[agents/projects/utk2-3275|UTK2-3275]]"
+related-ticket: "[[work/alfa-bank/tickets/utk2-3275|UTK2-3275]]"
 ---
 
 # 2026-04-11 UTK2-3275 notes refresh
@@ -10,7 +14,7 @@ tags:
 - Vault: `/home/marat/dev/git/markul/obsidian`
 - Related notes:
   - [[agents/projects/utk2-3275|UTK2-3275]]
-  - [[work/alfa-bank/tickets/active/utk2-3275|UTK2-3275]]
+  - [[work/alfa-bank/tickets/utk2-3275|UTK2-3275]]
   - [[daily/2026-04-11]]
 
 ## Goal
