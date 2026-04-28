@@ -1,0 +1,350 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-04-22
+related-project: "[[agents/projects/utk2-3310|UTK2-3310 Agent Work]]"
+related-ticket: "[[work/alfa-bank/tickets/utk2-3310|UTK2-3310]]"
+---
+
+# 2026-04-22 utk2-3310 jenkins integration tests
+
+## Scope
+
+- Repo: `/home/marat/dev/git/alfa/skp-product-change-workflow-service`
+- Related notes:
+  - [[agents/projects/utk2-3310|UTK2-3310]]
+  - [[work/alfa-bank/tickets/utk2-3310|UTK2-3310]]
+
+## Goal
+
+- Enable Jenkins integration tests for `UTK2-3310` the same way they are enabled in `ufr-kpnsb-limit-service`
+
+## Actions
+
+- Read the local repo `devops/Jenkinsfile`, current pod manifest annotations, and the integration-test project assets already present in `feature/UTK2-3310`
+- Compared the Jenkins pipeline contract with `/home/marat/dev/git/alfa/ufr-kpnsb-limit-service`
+- Confirmed `skp-product-change-workflow-service` already had the required pod-level metadata in `devops/base/k8s-pod.yaml`:
+  - `DOCKER_IMAGES` annotation with both the service and integration-test Dockerfiles
+  - `CONTAINER_WITH_TESTS` annotation pointing at the integration-test container
+  - integration-test container and supporting local dependency containers in the same pod manifest
+- Confirmed the missing piece was only the shared pipeline flags in `devops/Jenkinsfile`
+- Updated `devops/Jenkinsfile` to set:
+  - `runIntegrationTests = true`
+  - initially `integrationTestsPodFile = 'devops/base/k8s-pod.yaml'`
+- Checked the shared library implementation in `/home/marat/dev/git/alfa/dotnet-jenkins-pipeline` and confirmed the integration-test stages also require a repo-local `devops/RunTests.groovy`
+- Added `devops/RunTests.groovy` based on the `limit-service` runner and adapted it for `Skp.ProductChangeWorkflowService.Tests.Integration`
+- Updated the integration-test Dockerfile so `/usr/local/bin/allurectl` is executable inside the test container
+- Started a local `docker build -f test/Skp.ProductChangeWorkflowService.Tests.Integration/Dockerfile ...` verification run; it got past local file-copy and package-install steps but then stopped producing output during the containerized network-dependent path around the internal `allurectl` download
+- After pushing `feature/UTK2-3310`, verified VPN connectivity and tracked the branch through `utk-mcp`
+- Confirmed Bitbucket branch `feature/UTK2-3310` latest commit `698b6127926956d959d7a4ebec049e386e5809ae`
+- Observed Jenkins build linkage appear for that exact commit:
+  - `skp-product-change-workflow-service #221`
+  - state `INPROGRESS`
+  - first seen in Bitbucket build metadata at `2026-04-22T06:38:58.3450000+00:00`
+- Re-polled the Bitbucket branch metadata twice and the build was still `INPROGRESS`
+- Investigated the local `utk-mcp` container after the direct Jenkins MCP tools kept erroring
+- Found the Jenkins connector in `/home/marat/dev/git/alfa/utk-mcp/.env` was using `UTK_MCP_Jenkins__BaseUrl=https://platform/ci/`, which did not resolve correctly inside Docker
+- Switched the Jenkins base URL to `https://platform.moscow.alfaintra.net/ci/` and recreated the `utk-mcp` container
+- Verified from inside the container that Jenkins host resolution now works and direct Jenkins MCP methods return data again
+- Downloaded the console log for `skp-product-change-workflow-service #221` through `utk-mcp`
+- Confirmed build `#221` finished `FAILURE` for commit `698b6127926956d959d7a4ebec049e386e5809ae`
+- Read the shared library failure and traced it to `BuildIntegrationTestImagesStage.groovy:81`, where the pipeline iterates containers from the integration-test pod YAML and assumes every parsed object has a non-null `image`
+- Compared this repo with `ufr-kpnsb-limit-service` and confirmed the difference is structural:
+  - `limit-service` Jenkins pod file is a single-document Deployment manifest
+  - `skp-product-change-workflow-service` was pointing Jenkins at a multi-document manifest containing a Deployment, ServiceAccount, Role, RoleBinding, and CronJobs
+- Added `devops/base/k8s-pod.jenkins.yaml` as a Jenkins-only single-document Deployment manifest copied from the Deployment section of `devops/base/k8s-pod.yaml`
+- Updated `devops/Jenkinsfile` again so `integrationTestsPodFile = 'devops/base/k8s-pod.jenkins.yaml'`
+- Removed `serviceAccountName: kubectl-proxy` from the Jenkins-only manifest because Jenkins pod-template YAML does not create the referenced ServiceAccount or RBAC resources
+- Re-validated the Jenkins-only manifest locally:
+  - one YAML document
+  - kind `Deployment`
+  - eight containers
+  - no containers with an empty `image`
+  - no `serviceAccountName` in the pod spec
+- After reviewing how the integration scenario uses the Kubernetes API, rolled back that last local workaround:
+  - restored `devops/Jenkinsfile` to `integrationTestsPodFile = 'devops/base/k8s-pod.yaml'`
+  - removed `devops/base/k8s-pod.jenkins.yaml`
+  - left the parser failure as the current unresolved Jenkins issue for this ticket
+- Investigated a separate local integration-test issue where CronJob pods triggered through the Kubernetes API could not reach WireMock because `appsettings.Local.yaml` points downstream services at `http://localhost:2000/...`
+- Confirmed the root cause in `devops/base/k8s-pod.yaml`:
+  - the main `Deployment` pod can use `localhost:2000` because the `mock` container is a sidecar in the same pod
+  - the `CronJob` resources start separate pods, so `localhost:2000` points back to the CronJob pod itself rather than to the shared mock service
+- Updated both local `CronJob` specs to override the relevant mock-backed configuration through environment variables, replacing `localhost:2000` with `http://skp-product-change-workflow-service:2000`
+- Kept the fix in the pod manifest rather than changing `appsettings.Local.yaml`, so host-run local behavior still uses localhost while Kubernetes CronJob pods use cluster DNS
+- Validated the updated manifest with:
+  - `kubectl kustomize devops/api`
+  - `kubectl apply --dry-run=client -f devops/base/k8s-pod.yaml`
+
+## Findings
+
+- The Jenkinsfile switch alone was not enough: `dotnet-jenkins-pipeline` hardcodes `devops/RunTests.groovy` and fails the integration-test stages if that file is missing
+- The authorization Thrift mock is now verified locally end to end:
+  - auth-mock token issuance succeeds on `:8090`
+  - the API calls the Thrift sidecar on `:9000` and receives `200`
+  - the earlier `jwtTokenString` / authorization-client token acquisition failure no longer appears on the smoke path
+- After removing the auth blocker, the current local `500` on `POST /process/v10/run` is a different application/runtime issue:
+  - `Skp.ProductChangeWorkflowService.Application` throws `System.IO.FileNotFoundException`
+  - missing assembly: `Skp.Contracts.Common, Version=0.1335.1.0`
+- That `Skp.Contracts.Common` failure was not an application-code bug in `ValidationBehavior`; it was caused by the temporary single-image packaging of the Thrift mock overwriting the API's newer `Skp.Contracts.Common.dll`
+- `skp-product-change-workflow-service` already matched the pod-annotation and test-container requirements used by `limit-service`; the missing repo-local runner was the real remaining CI contract gap
+- The direct Jenkins MCP failures were local-environmental, not server-side: the `utk-mcp` container could not resolve the short host `platform`, so Jenkins tools recovered after changing the base URL to the fully qualified domain name
+- Build `#221` failed before running integration tests because the shared pipeline does not tolerate the repo's multi-document `k8s-pod.yaml`; enabling integration tests surfaced a parser assumption that had been irrelevant before
+- The Jenkins-only manifest should clear the pipeline `NullPointerException`, but there is still a runtime authorization risk because the Jenkins pod will use its default service account rather than the repo-local `kubectl-proxy` service account or RBAC objects defined for local skaffold use
+- The remaining local Docker-build uncertainty is environmental rather than structural: containerized access to internal package or binary endpoints can still stall or time out during local builds
+- Because the CronJob-triggering scenario reads a real `CronJob` object and then creates a `Job` through `kubectl proxy`, the Jenkins-only manifest workaround was not safe enough to keep without an explicit plan for namespace provisioning and RBAC in the Jenkins test environment
+- The local CronJob mock-reachability issue is separate from Jenkins: it comes from `localhost` semantics across pods, and it is best fixed in the Kubernetes manifest rather than in the shared local appsettings file
+- After build `#225` repeated the same `Cannot get property 'image' on null object` failure while still using `devops/base/k8s-pod.yaml`, reintroduced the Jenkins-only manifest specifically to test whether the shared pipeline is otherwise healthy
+- Recreated `devops/base/k8s-pod.jenkins.yaml` from the current `Deployment` section of `devops/base/k8s-pod.yaml`
+- Updated `devops/Jenkinsfile` again so `integrationTestsPodFile = 'devops/base/k8s-pod.jenkins.yaml'`
+- Kept the Jenkins-only manifest to one YAML document and removed `serviceAccountName`
+- Validated the recreated Jenkins-only manifest locally:
+  - one YAML document
+  - kind `Deployment`
+  - eight containers
+  - no containers with an empty `image`
+  - no `serviceAccountName` in the pod spec
+  - `kubectl apply --dry-run=client -f devops/base/k8s-pod.jenkins.yaml` passed
+- Tracked Jenkins build `skp-product-change-workflow-service #233` for branch `feature/UTK2-3288-single-deployment`
+- Confirmed the Jenkins-only manifest solved the shared library issue:
+  - the build passed `BuildIntegrationTestImagesStage`
+  - pushed both integration-test images
+  - entered `ExecuteIntegrationTestsStage`
+- Confirmed the remaining Jenkins blocker is Kubernetes RBAC, not the shared parser:
+  - integration test `001.TransferExpiringDealToProductChangeRequestService` got `403 Forbidden`
+  - the request was `GET http://localhost:8001/apis/batch/v1/namespaces/default/cronjobs/transfer-expiring-deal`
+  - Kubernetes returned `User "system:serviceaccount:jenkins-slaves:default" cannot get resource "cronjobs" in API group "batch" in the namespace "default"`
+- Compared with `ufr-pricing-service` as a design reference
+- Found that `ufr-pricing-service` does not use Kubernetes API access in Cron integration tests:
+  - its app has a built-in `CONTAINER_MODE=Cron`
+  - `JOB_NAME` selects the cron handler
+  - tests run `dotnet Ufr.Pricing.Service.Api.dll` directly with those env vars instead of reading a `CronJob` resource and creating a `Job`
+- Mapped that pattern to this service:
+  - `skp-product-change-workflow-service` already has a separate `Skp.ProductChangeWorkflowService.CronJob.dll` runner that accepts the cron name as an argument
+  - therefore the closest adaptation here is likely to run `dotnet Skp.ProductChangeWorkflowService.CronJob.dll <job-name>` directly from integration tests, rather than trying to preserve Kubernetes API-driven CronJob execution in Jenkins
+- After rollback of the direct-run test experiment, simplified the local/Jenkins pod manifest itself:
+  - removed `serviceAccountName: kubectl-proxy`
+  - removed the `kubectl-proxy` sidecar container
+  - removed embedded `ServiceAccount`, `Role`, and `RoleBinding`
+  - removed both `batch/v1 CronJob` resources from `devops/base/k8s-pod.yaml`
+  - removed the `kubectl-proxy` port from `devops/base/k8s-service.yaml`
+  - result: the Jenkins pod manifest path is back to a single `Deployment`/`Service` pair with no CronJob access support at all
+- Replaced the stale integration scenario with a Jenkins smoke test:
+  - updated `test/Skp.ProductChangeWorkflowService.Tests.Integration/appsettings.json` to use the correct basic-auth header for `skp-product-change-workflow-service`
+  - replaced the old CronJob scenario in `001.TransferExpiringDealToProductChangeRequestService.feature` with one `GET {{ApiBaseUrl}}/health` request carrying the `Authorization` header
+  - `dotnet build test/Skp.ProductChangeWorkflowService.Tests.Integration/Skp.ProductChangeWorkflowService.Tests.Integration.csproj -c Release` passed
+  - caveat: this proves the Jenkins integration-test stage can reach the API over HTTP and send the basic-auth header, but `/health` itself is not a basic-protected endpoint; strict basic-auth enforcement would require a lightweight Thrift probe or another dedicated basic-auth HTTP route
+- Cleaned the local Minikube service-image state and forced a fresh redeploy:
+  - stopped the running `skaffold dev -p api --port-forward`
+  - deleted the current `Deployment` and `Service` for `skp-product-change-workflow-service`
+  - force-removed the old Minikube Docker images `skp-product-change-workflow-service:7cc343cc9e86...` and `skp-product-change-workflow-service-test:dfa9e86708d5...`
+  - started a fresh `skaffold dev -p api --port-forward`
+  - confirmed Skaffold rebuilt and redeployed the app and test images, then restored port-forwarding for `8080`, `8090`, `8088`, `5432`, `2000`, and `9092`
+- Re-tested the local auth path after the clean rebuild:
+  - `GET http://localhost:8080/health` returned `200`
+  - `GET http://localhost:8090/.well-known/openid-configuration` returned `200`
+  - `POST http://localhost:8090/connect/token` returns a token for `client_id=skp-product-change-workflow-service` and `client_secret=skp-product-change-workflow-service` when no `scope` is requested; the mock rejects `scope=skp-product-change-workflow-service` with `{"error":"invalid_scope"}`
+  - `POST http://localhost:8080/process/v10/run` still returned `401 Unauthorized` with `WWW-Authenticate: Bearer error="invalid_token", error_description="The signature key was not found"`
+- Traced the JWT mismatch to the local OpenID metadata retriever in `src/Skp.ProductChangeWorkflowService.Api/LocalAuthenticationExtensions.cs`
+  - confirmed the token itself was internally consistent:
+    - `kid=6E8863EA8DFE2E698EBAFF24AE36FCFF`
+    - `iss=skp-authentication-service-mock`
+    - `aud=api`
+  - confirmed the auth mock JWKS exposed the same signing key id
+  - decompiled `Skp.Auth.Authentication` and verified the service really uses the standard `Bearer` scheme plus `Authority`/`ConfigurationManager`; there was no hidden alternate JWT scheme
+  - decompiled `Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectConfigurationRetriever` and then reproduced the local retriever logic in a temporary `net10.0` console
+  - found the exact failure: `JsonSerializer.Deserialize<OpenIdConnectConfiguration>(doc)` throws on the mock discovery document because fields like `frontchannel_logout_supported` are booleans while `OpenIdConnectConfiguration` still exposes them as strings for compatibility
+  - that failure explains the observed runtime pattern:
+    - the API hit `/.well-known/openid-configuration`
+    - it never fetched `/.well-known/openid-configuration/jwks`
+    - token validation later failed with `The signature key was not found`
+- Fixed the retriever implementation:
+  - replaced `JsonSerializer.Deserialize<OpenIdConnectConfiguration>(doc)` with the supported `OpenIdConnectConfiguration.Create(doc)` parser
+  - kept the existing custom override `openIdConnectConfiguration.JwksUri = address + "/jwks"` so the original local full-host workaround still applies
+  - local `dotnet build src/Skp.ProductChangeWorkflowService.Api/Skp.ProductChangeWorkflowService.Api.csproj -c Release` passed
+  - Skaffold rebuilt the API image, redeployed the pod, and restored all port-forwards
+- Re-tested after the parser fix:
+  - the auth mock now shows the API performing both:
+    - `GET /.well-known/openid-configuration`
+    - `GET /.well-known/openid-configuration/jwks`
+  - `POST http://localhost:8080/process/v10/run` no longer returns `401 invalid_token`
+  - the request now reaches controller authorization and fails later with `500 Internal Server Error`
+  - response detail now shows a separate downstream problem:
+    - `Value cannot be null. (Parameter 'jwtTokenString')`
+    - this comes from `Skp.Auth.Authorization` while fetching permissions through `AuthorizationClient`
+    - API logs show repeated `Ошибка получения токена. HttpStatusCode: [BadRequest], ErrorType: [Protocol], Error: [invalid_request]` for the service token acquisition path
+- Ran a direct comparison test with `SetupLocalSkpJwtBearerAuthentication()` temporarily removed from `ServiceCollectionExtensions.Api.cs`
+  - local `dotnet build` still passed
+  - Skaffold rebuilt and redeployed a new API image without the local override
+  - because Skaffold lost the `Service` object during that redeploy, used direct pod port-forwarding to temporary local ports `18080` and `18090`
+  - repeated the same auth flow against the new pod:
+    - minted a token from `http://localhost:18090/connect/token`
+    - called `POST http://localhost:18080/process/v10/run` with that bearer token
+  - outcome was unchanged for inbound auth:
+    - response was still `500`, not `401 invalid_token`
+    - response body was the same later failure: `Value cannot be null. (Parameter 'jwtTokenString')`
+    - auth-mock logs still showed successful discovery and JWKS fetch by the API before the later authorization-client token error
+  - conclusion:
+    - for the current `http://localhost:8090/` auth-mock topology, the custom `SetupLocalSkpJwtBearerAuthentication()` override is not required for inbound JWT validation
+    - the override remains relevant only if the repo still needs the historical JWKS URL workaround for `/skp/skp-authentication-service/...`
+  - restored the temporary removal immediately after the test so the branch does not keep a test-only behavior change
+- Checked the effective non-local deployment config in `infra-helm-values`
+  - `skp-product-change-workflow-service/appsettings.yml` uses `SkpJwtAuthenticationOptions.Authority: "http://skp-authentication-service.skp/"`
+  - therefore the helper is irrelevant for helm environments because it only runs under `ServiceEnvironments.IsLocal()`
+- Verified the historical dev-auth discovery document directly over VPN:
+  - `http://skp-dev-sys.moscow.alfaintra.net/skp/skp-authentication-service/.well-known/openid-configuration`
+  - both `JsonSerializer.Deserialize<OpenIdConnectConfiguration>(doc)` and `OpenIdConnectConfiguration.Create(doc)` currently parse that payload successfully
+  - the returned `jwks_uri` already matches the expected `/skp/skp-authentication-service/.well-known/openid-configuration/jwks` path
+- Applied the final code shape requested by the user:
+  - in `ServiceCollectionExtensions.Api.cs`, the explicit outer `if (ServiceEnvironments.IsLocal())` guard was kept at the call site
+  - in `LocalAuthenticationExtensions.cs`, `SetupLocalSkpJwtBearerAuthentication(configuration)` now returns immediately unless:
+    - `SkpJwtAuthenticationOptions:Authority` is not empty
+    - that authority contains `/skp/skp-authentication-service/`
+  - in `LocalAuthenticationExtensions.cs`, reverted the parser from `OpenIdConnectConfiguration.Create(doc)` back to `JsonSerializer.Deserialize<OpenIdConnectConfiguration>(doc)!`
+  - `dotnet build src/Skp.ProductChangeWorkflowService.Api/Skp.ProductChangeWorkflowService.Api.csproj -c Release` passed after the change
+- Captured the final CronJob scope decision for this ticket:
+  - do not add CronJob resources back into the local Skaffold integration-test path
+  - reason: the shared Jenkins integration-test pipeline is effectively constrained to a single deployment-style manifest and does not support this service’s previous multi-resource CronJob-driven setup cleanly
+  - practical consequence: the supported local/Jenkins integration-test topology stays as one `Deployment` plus supporting sidecars/services, and CronJob behavior is out of scope for the current Skaffold/Jenkins path
+- Reworked the Jenkins smoke scenario again to use the local auth mock rather than a static header
+  - updated `test/Skp.ProductChangeWorkflowService.Tests.Integration/Tests/001.TransferExpiringDealToProductChangeRequestService.feature`
+  - request is now `GET {{ApiBaseUrl}}/process/v10/run`
+  - expected status is now `405`
+  - kept the `Authorization` header in the scenario so the test still exercises the local auth path
+- Added bearer-token retrieval to the integration test harness instead of hardcoding an auth header
+  - `test/Skp.ProductChangeWorkflowService.Tests.Integration/appsettings.json` now carries:
+    - `AuthTokenUrl=http://localhost:8090/connect/token`
+    - `AuthClientId=skp-product-change-workflow-service`
+    - `AuthClientSecret=skp-product-change-workflow-service`
+  - `test/Skp.ProductChangeWorkflowService.Tests.Integration/Steps/CustomSteps.cs` now has a `BeforeScenario` hook that reads those Molder variables, requests a client-credentials token from the mock auth service, and overrides the `Authorization` variable with `Bearer <token>`
+  - `test/Skp.ProductChangeWorkflowService.Tests.Integration/Helpers/AuthenticationHelper.cs` now implements the token request and response parsing
+- Verified the updated test project at compile level
+  - `dotnet build test/Skp.ProductChangeWorkflowService.Tests.Integration/Skp.ProductChangeWorkflowService.Tests.Integration.csproj` passed
+  - there was no running local pod or auth mock at `localhost:8080` and `localhost:8090`, so no end-to-end execution was possible in this pass
+- Performed full local runtime verification later the same day
+  - started `skaffold dev -p api --port-forward`
+  - waited for the deployment to stabilize and local port-forwards to come up on `8080` and `8090`
+  - confirmed:
+    - `GET http://localhost:8090/.well-known/openid-configuration` returned `200`
+    - `POST http://localhost:8090/connect/token` returned `200`
+    - `GET http://localhost:8080/health` returned `200`
+  - ran `dotnet test test/Skp.ProductChangeWorkflowService.Tests.Integration/Skp.ProductChangeWorkflowService.Tests.Integration.csproj`
+  - result: `Passed: 1, Failed: 0`
+  - auth-mock logs showed the scenario `BeforeScenario` hook really did call `/connect/token` for `client_id=skp-product-change-workflow-service`
+  - important caveat: a direct unauthenticated `GET http://localhost:8080/process/v10/run` also returned `405`, and API logs marked that request as unauthenticated; therefore this smoke test proves Jenkins stage wiring plus token-retrieval hook execution, but not HTTP authorization enforcement on that route
+- Switched the smoke scenario from `GET` to `POST`
+  - updated `test/Skp.ProductChangeWorkflowService.Tests.Integration/Tests/001.TransferExpiringDealToProductChangeRequestService.feature`
+  - scenario now stores request body:
+    - `{"code":"test"}`
+  - scenario now sends:
+    - `POST {{ApiBaseUrl}}/process/v10/run`
+    - `Content-Type: application/json`
+    - `Authorization: {{Authorization}}`
+  - local direct probe with a real token confirmed current service behavior:
+    - status `500`
+    - detail `Value cannot be null. (Parameter 'jwtTokenString')`
+  - matching API logs showed the failure still occurs in downstream permission retrieval for `AuthorizationClient`
+- Fixed a Molder variable-overwrite issue discovered while verifying the POST scenario
+  - `BeforeScenario` initially tried to overwrite `Authorization`, but `Molder:IntegrationTests.Authorization` had already been loaded as a global variable from `appsettings.json`
+  - that caused two failure modes during verification:
+    - placeholder header remained in place, producing `401`
+    - explicit global overwrite attempt raised `Element with key: "Authorization" has already created with type 'Global'`
+  - final fix:
+    - removed `Authorization` from `test/Skp.ProductChangeWorkflowService.Tests.Integration/appsettings.json`
+    - left `AuthTokenUrl`, `AuthClientId`, and `AuthClientSecret` in config
+    - `BeforeScenario` now creates `Authorization` dynamically
+- Re-verified after the fix
+  - re-established local service forwarding with `kubectl port-forward service/skp-product-change-workflow-service 8080:8080 8090:8090`
+  - ran `dotnet test test/Skp.ProductChangeWorkflowService.Tests.Integration/Skp.ProductChangeWorkflowService.Tests.Integration.csproj`
+  - result: `Passed: 1, Failed: 0`
+- Added a local Thrift authorization mock like the pattern used in other repos
+- Reviewed the current branch against `integration-2`
+- Confirmed the current Jenkins smoke test is a weak gate by design:
+  - the feature sends `POST /process/v10/run` with `{"code":"test"}`
+  - application code throws for unknown workflow codes, so `500` is expected even when the process path is not functionally healthy
+  - practical result: the test proves Jenkins stage wiring, token retrieval, and HTTP reachability more than it proves valid process execution
+- Confirmed the local documentation is behind the actual manifests:
+  - `README.md` still says the `api` profile creates local `CronJob` resources
+  - current `devops/api` and `devops/base` kustomize outputs render only the `Service` plus one `Deployment`
+  - created `test/Skp.ProductChangeWorkflowService.Tests.ThriftMockServer` with a minimal `AuthorizationService.IAsync` mock returning the hashed `kpn:ProductChangeRequest:Process:Manage` permission
+  - updated `appsettings.Local.yaml` so `AuthorizationClient.BaseUrl = http://localhost:9000/api/thrift/`
+  - updated the local pod to run the mock on port `9000`
+  - initially tried a separate mock image, then simplified the setup so `devops/Dockerfile` publishes `Skp.ProductChangeWorkflowService.Tests.ThriftMockServer.dll` into the main service image and the sidecar runs that DLL directly
+- Rebuilt and redeployed the local stack with `skaffold dev -p api --port-forward`
+  - verified `skp-product-change-workflow-service-thriftmockserver` is ready
+  - confirmed `POST http://localhost:8090/connect/token` returns `200`
+  - confirmed the API reaches `POST http://localhost:9000/api/thrift/` and receives `200`
+- Re-ran the integration smoke test against the live local pod
+  - `dotnet test ./test/Skp.ProductChangeWorkflowService.Tests.Integration/Skp.ProductChangeWorkflowService.Tests.Integration.csproj --logger 'console;verbosity=minimal'`
+  - result: `Passed: 1, Failed: 0`
+  - `POST /process/v10/run` still returns `500`, but now with a new root cause: `Could not load file or assembly 'Skp.Contracts.Common, Version=0.1335.1.0'`
+- Traced the `Skp.Contracts.Common` runtime failure to the packaging of the new Thrift mock
+  - a normal API publish contains `Skp.Contracts.Common.dll` from `0.1335.1`
+  - the Thrift mock publish contains a different `Skp.Contracts.Common.dll` from `0.1105.1` through `Skp.Auth` and `Skp.Boilerplate.Api.Thrift`
+  - because `devops/Dockerfile` copied API output and then copied Thrift-mock output into the same `/app` folder, the mock's older DLL overwrote the API's newer one
+  - that explains why `Skp.ProductChangeWorkflowService.Application` later failed to load `Skp.Contracts.Common, Version=0.1335.1.0`
+- Reverted the local Thrift mock back to a dedicated image
+  - removed mock restore and publish steps from `devops/Dockerfile`
+  - restored `test/Skp.ProductChangeWorkflowService.Tests.ThriftMockServer/Dockerfile`
+  - restored the dedicated `skp-product-change-workflow-service-thriftmockserver` image in `devops/base/k8s-pod.yaml` and `skaffold.yaml`
+  - result: the API image no longer shares a runtime directory with the mock output, so the overwrite path is removed
+- Attempted to verify the dedicated mock image directly with Docker
+  - the standalone mock-image build again hit Artifactory timeouts during `dotnet restore`
+  - stopped the hanging build after confirming the repo-level packaging change itself was complete
+
+## Decisions
+
+- Reuse the exact shared-pipeline switch used in `limit-service` instead of adding service-specific Jenkins logic
+- Reuse the `limit-service` `RunTests.groovy` pattern so the repo matches the expectations baked into `dotnet-jenkins-pipeline`
+- Keep local skaffold resources and Jenkins pod-template resources separate: local development continues to use `devops/base/k8s-pod.yaml`, while Jenkins now uses the pared-down `devops/base/k8s-pod.jenkins.yaml`
+- Roll back the Jenkins-only manifest workaround until there is a deliberate Jenkins design for creating or exposing the needed CronJob resources and RBAC during the integration-test run
+- Keep host-run local config and in-cluster local config split at the manifest layer: use `appsettings.Local.yaml` for host-run localhost wiring, and override only the Kubernetes CronJob pod URLs that must resolve through the cluster service name
+- Re-enable the Jenkins-only manifest when the immediate goal is to prove whether the shared pipeline can get past the multi-document manifest parser issue before solving the later CronJob or RBAC semantics
+- Treat the Jenkins parser issue and the Cron execution strategy as separate concerns: the single-document manifest fixes the former, while the `ufr-pricing-service` pattern suggests a cleaner way to avoid the latter
+- Treat the Minikube cleanup as complete proof that the remaining local `/process/v10/run` failure is not stale image state, but a live JWT validation mismatch between the API and the auth mock
+- Treat the original JWT mismatch as resolved: the remaining failure after the fix is a separate authorization-service client token issue, not bearer-token validation of the inbound request
+- For the Jenkins smoke test, prefer a route-method mismatch check over a protected `POST` execution path while the application still has a separate downstream permission-token issue on `POST /process/v10/run`
+- Keep in mind that the current `405` smoke test is intentionally weaker than an authorization test: it is stable for Jenkins-stage verification, but it cannot be treated as proof that the request reached an authenticated controller action
+- The new `POST` smoke test is stronger than the previous `GET 405` check because it requires a real bearer token and reaches the controller authorization path, but it still validates the currently known failure path rather than a successful business execution
+- Keep the local authorization mock in a separate image; sharing the runtime folder with the API is unsafe because the mock and API resolve different transitive versions of `Skp.Contracts.Common`
+
+## Blockers
+
+- None
+- no local runtime was available for final execution verification in this pass: `curl` to `http://localhost:8080/health` and `http://localhost:8090/.well-known/openid-configuration` both failed with connection refused because no local pod was running
+
+## Validation
+
+- Compared `devops/Jenkinsfile` with `/home/marat/dev/git/alfa/ufr-kpnsb-limit-service/devops/Jenkinsfile`
+- Confirmed from `/home/marat/dev/git/alfa/dotnet-jenkins-pipeline` that the shared stages require both the pod YAML and `devops/RunTests.groovy`
+- Confirmed the current repo already exposes the expected integration-test metadata in `devops/base/k8s-pod.yaml`
+- Attempted `docker build -f test/Skp.ProductChangeWorkflowService.Tests.Integration/Dockerfile -t skp-product-change-workflow-service-test-local .`
+- Queried `get_bitbucket_branch(projectKey=\"UFRKPNSB\", repoSlug=\"skp-product-change-workflow-service\", branchName=\"feature/UTK2-3310\")`
+- Queried `get_jenkins_build`, `get_jenkins_build_log`, and `get_jenkins_job_builds` for the service after fixing the local `utk-mcp` Jenkins DNS configuration
+- Saved and reviewed the Jenkins console log for build `#221`
+- Checked the Jenkins-only manifest structure locally with `python3` YAML parsing
+- Re-rendered the local API overlay after the CronJob URL overrides
+- Ran client-side `kubectl apply` validation for `devops/base/k8s-pod.yaml`
+- Parsed and dry-run validated the recreated `devops/base/k8s-pod.jenkins.yaml`
+- Removed the old service and integration-test images from the Minikube Docker daemon, then re-ran `skaffold dev -p api --port-forward`
+- Rechecked `/health`, OIDC discovery on `8090`, token issuance on `/connect/token`, and the protected `POST /process/v10/run` call after the clean redeploy
+- Decompiled `Skp.Auth.Authentication` and `Microsoft.IdentityModel.Protocols.OpenIdConnect` to verify the effective bearer setup and supported parsing path
+- Built and redeployed the service after replacing the local metadata parser with `OpenIdConnectConfiguration.Create(doc)`
+- Rechecked the protected `POST /process/v10/run` call and confirmed the failure moved from JWT validation to downstream permission-token acquisition
+- Built the updated integration test project after switching the smoke scenario to bearer-token acquisition from the auth mock and `GET /process/v10/run`
+- Checked local runtime availability with:
+  - `curl http://localhost:8080/health`
+  - `curl http://localhost:8090/.well-known/openid-configuration`
+  - both returned connection-refused because no local pod was running
+- Started `skaffold dev -p api --port-forward`, waited for deployment readiness, and then ran the integration test project successfully
+- Queried auth-mock logs and confirmed successful `POST /connect/token` calls during the passing scenario
+- Built `test/Skp.ProductChangeWorkflowService.Tests.ThriftMockServer/Skp.ProductChangeWorkflowService.Tests.ThriftMockServer.csproj`
+- Rebuilt and redeployed the local pod with the Thrift mock sidecar published from `devops/Dockerfile`
+- Queried API, auth-mock, and Thrift-mock logs and confirmed successful token issuance plus `POST /api/thrift/`
+- Compared API publish output and Thrift-mock publish output for `Skp.Contracts.Common.dll` and confirmed they are different binaries from different resolved versions
+- Restored the dedicated Thrift-mock Dockerfile and removed the mock publish output from the main service image
+- Attempted `docker build -t skp-product-change-workflow-service-thriftmockserver:test -f test/Skp.ProductChangeWorkflowService.Tests.ThriftMockServer/Dockerfile .`
+- Stopped the hanging dedicated mock-image build after repeated Artifactory timeouts during `dotnet restore`
+- Queried the same `GET /process/v10/run` route without auth and confirmed it still returns `405`
+- Probed `POST /process/v10/run` directly with a token and confirmed `500` plus `jwtTokenString` error detail
+- Fixed the `Authorization` variable injection strategy and reran the integration test successfully through Reqnroll/Molder

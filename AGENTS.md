@@ -98,6 +98,8 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Properties supplement markdown sections; do not remove sections like `Goal`, `Scope`, `Actions`, `Decisions`, etc.
 - Every session note should link to the related agent project in its `Scope` or related-notes section when an agent project exists
 - Use session notes to capture the detailed chronology, commands, decisions, blockers, validation, and handoff context needed for another Codex run to resume the work
+- Frame daily and session notes around the underlying project or ticket work, not around note-editing activity; write `implemented`, `validated`, `investigated`, `triaged`, or equivalent task language instead of `updated notes`, `reviewed notes`, or `normalized notes` when the real work was technical ticket progress
+- Do not create a session note whose main purpose is vault housekeeping, note cleanup, or moving the same facts between notes; if the only work done was note maintenance, prefer updating the durable ticket or project note directly and skip the session note
 
 ### Context Budget
 
@@ -111,6 +113,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - If a project section starts reading like a work log, move that material into a session note
 - Summarize logs, command output, and diagnostics instead of pasting long raw output unless exact text is required for future debugging
 - Skip note updates for trivial one-off work that has no likely future retrieval value
+- When backfilling missing context from existing code, branches, Jira state, or prior notes, record the reconstructed ticket or project history as part of that work item; do not describe the activity primarily as note housekeeping
 
 ### Alfa Work
 

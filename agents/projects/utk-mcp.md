@@ -67,7 +67,8 @@ related-ticket:
 - Repo docs were synced with the implemented tool surface; `README.md` is currently Russian by request and `AGENTS.md` holds the technical-gap list for contributors and agents
 - JSON handling now forces UTF-8 decoding for JSON responses and uses readable non-escaped UTF-8 JSON serialization for MCP responses and exported JSON artifacts
 - Local Docker compose runs the container as the host user to avoid root-owned files in `./downloads`
-- The local codebase version is now `0.3.0`; unit validation passes with `27` tests
+- The local codebase version is now `0.4.0`; unit validation passes with `29` tests
+- [[agents/sessions/2026-04-19-utk-mcp-kibana-multi-service|2026-04-19]]: `SearchKibanaLogs` now accepts a `services` list (multi-service log trace); see [[agents/sessions/2026-04-19-kibana-covenant-errors|2026-04-19]] for covenant-monitoring-service error analysis
 
 ## Key Decisions
 
