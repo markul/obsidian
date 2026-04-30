@@ -3,6 +3,7 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-27
+service: "[[work/alfa-bank/services/ufr-kpnsb-limit-service|ufr-kpnsb-limit-service]]"
 related-project: "[[agents/projects/utk2-3326|UTK2-3326 Agent Work]]"
 related-ticket: "[[work/alfa-bank/tickets/utk2-3326|UTK2-3326]]"
 ---

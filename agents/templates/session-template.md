@@ -3,6 +3,7 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: YYYY-MM-DD
+service: 
 related-project: 
 related-ticket: 
 ---

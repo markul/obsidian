@@ -1,6 +1,7 @@
 ---
 tags:
   - agents/session
+service: "[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]"
 ---
 
 # 2026-04-11 UTK2-3275 repo compare plan

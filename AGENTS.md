@@ -36,6 +36,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Put personal technical reference material under `personal/tech/`, including machine software inventory notes such as `personal/tech/software.md`
 - Put employer or client-specific material under `work/`
 - Treat Jira issues and Confluence work items as work-related by default, not personal
+- Under each employer or client area in `work/`, keep canonical service notes in `services/{service}.md` when a service has recurring tickets, sessions, or operational context
 - Under each employer or client area in `work/`, keep ticket notes in one stable `tickets/` directory, with one Markdown file per ticket
 - Ticket notes should live directly at paths such as `work/alfa-bank/tickets/utk2-3264.md`
 
@@ -57,6 +58,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - It is acceptable to create small topic hub notes such as `index.md` in a relevant area when they improve navigation
 - When a durable note has several important neighbors, add a short `Related Notes` section or equivalent local links
 - When work or agent notes produce reusable knowledge, promote that understanding into a durable personal note and link the notes when useful
+- Keep service notes compact: store durable repository, local-development, operational, and cross-ticket navigation facts there, but leave detailed implementation history in ticket, project, and session notes
 
 ### Agent Projects
 
@@ -64,7 +66,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - The canonical durable state for an agent project should stay in that single stable note even when supporting notes also exist
 - If a plan or reference grows too large for the canonical project note, it is acceptable to create a clearly named supporting note such as `agents/projects/{name}-plan.md`
 - Supporting notes must supplement, not replace, the canonical project note, and the canonical note should link to them when they matter to current work
-- Agent project notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `status`, `created`, `completed`, and `related-ticket`
+- Agent project notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `service`, `status`, `created`, `completed`, and `related-ticket`
 - Properties supplement markdown sections; do not remove sections like `Status`, `Timestamps`, `Goal`, `Scope`, etc.
 - In each agent project note, include `Created` and `Completed` timestamps with date and time to the minute
 - Keep agent project notes concise and durable; do not turn them into step-by-step work logs
@@ -94,7 +96,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Keep daily notes minimal: each work item should usually be a single-line bullet with a short summary and a link to the related agent project or ticket
 - For meaningful agent work, automatically create or update a session note under `agents/sessions/`
 - Name session notes as `YYYY-MM-DD-topic.md`
-- Session notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `session-date`, `related-project`, and `related-ticket`
+- Session notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `session-date`, `service`, `related-project`, and `related-ticket`
 - Properties supplement markdown sections; do not remove sections like `Goal`, `Scope`, `Actions`, `Decisions`, etc.
 - Every session note should link to the related agent project in its `Scope` or related-notes section when an agent project exists
 - Use session notes to capture the detailed chronology, commands, decisions, blockers, validation, and handoff context needed for another Codex run to resume the work
@@ -114,6 +116,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Summarize logs, command output, and diagnostics instead of pasting long raw output unless exact text is required for future debugging
 - Skip note updates for trivial one-off work that has no likely future retrieval value
 - When backfilling missing context from existing code, branches, Jira state, or prior notes, record the reconstructed ticket or project history as part of that work item; do not describe the activity primarily as note housekeeping
+- Use the `service` property for the primary service or repository when a note clearly centers on one service, and store it as a wiki link to the canonical service note such as `[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]`. Leave it empty or omit it for broad, ambiguous, or genuinely multi-service notes.
 
 ### Alfa Work
 
@@ -128,7 +131,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Each work ticket note may include the remote Bitbucket repository link and the local repository path when they are known
 - Each work ticket note should include a `Development Metadata` section for branches, pull requests, repositories, builds, or other implementation-tracking facts when available
 - Each work ticket note should follow this section order unless there is a strong reason not to: `Status`, `Goal`, `Jira Snapshot`, `Development Metadata`, `Notes`
-- Work ticket notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `ticket-key`, `status`, `jira-status`, `created`, `updated`, `assignee`, and `agent-project`
+- Work ticket notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `ticket-key`, `service`, `status`, `jira-status`, `created`, `updated`, `assignee`, and `agent-project`
 - Alfa Bank ticket notes should include the `alfa-bank/ticket` tag in frontmatter for broad filtering across all Alfa work tickets
 - Properties supplement markdown sections; do not remove sections like `Status`, `Goal`, `Jira Snapshot`, etc.
 - Treat [[work/alfa-bank/tickets/utk2-3264|UTK2-3264]] as the canonical example for work ticket structure

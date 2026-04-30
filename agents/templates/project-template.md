@@ -2,6 +2,7 @@
 tags:
   - agents/project
 note-type: agent-project
+service: 
 status: new
 created: YYYY-MM-DDTHH:MM
 completed: 

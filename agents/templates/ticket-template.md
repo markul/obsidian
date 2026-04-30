@@ -3,6 +3,7 @@ tags:
   - alfa-bank/ticket
 note-type: work-ticket
 ticket-key: 
+service: 
 status: new
 jira-status: 
 created: YYYY-MM-DD

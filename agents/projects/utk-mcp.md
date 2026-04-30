@@ -2,6 +2,7 @@
 tags:
   - agents/project
 note-type: agent-project
+service: "[[work/alfa-bank/services/utk-mcp|utk-mcp]]"
 status: active
 created: 2026-03-31T00:00
 completed: 

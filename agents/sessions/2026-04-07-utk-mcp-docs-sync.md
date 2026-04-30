@@ -1,6 +1,7 @@
 ---
 tags:
   - agents/session
+service: "[[work/alfa-bank/services/utk-mcp|utk-mcp]]"
 ---
 
 # UTK MCP Docs Sync
