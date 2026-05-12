@@ -2,8 +2,8 @@
 
 ## Related Notes
 
-- [[personal/tech/index|Tech]]
-- [[personal/tech/Infrastructure|Infrastructure]]
+- [[personal/index|Personal]]
+- [[personal/tech/infrastructure|Infrastructure]]
 - [[agents/projects/my-infra|My Infra]]
 
 ## Overview

@@ -1,3 +1,12 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-04-03
+service:
+project: "[[agents/projects/second-brain|Second Brain]]"
+ticket:
+---
 # Obsidian ticket instructions update
 
 ## Scope

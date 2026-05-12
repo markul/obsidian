@@ -4,9 +4,8 @@ Agent project: [[agents/projects/second-brain|Second Brain]]
 
 ## Related Notes
 
-- [[personal/learning/ai/index|AI]]
+- [[personal/index|Personal]]
 - [[personal/learning/ai/multi-agent|Multi-Agent OpenCode]]
-- [[personal/tech/index|Tech]]
 
 ## Focus
 

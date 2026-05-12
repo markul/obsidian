@@ -37,17 +37,5 @@ Ticket notes live under the stable `work/alfa-bank/tickets/` directory and are g
 - [[work/alfa-bank/tickets/utk2-3326|UTK2-3326]]
 - [[work/alfa-bank/tickets/utk2-3329|UTK2-3329]]
 - [[work/alfa-bank/tickets/utk2-3339|UTK2-3339]]
-
-## Related Project Notes
-
-- [[agents/projects/utk2-3243|UTK2-3243 Agent Work]]
-- [[agents/projects/utk2-3264|UTK2-3264 Agent Work]]
-- [[agents/projects/utk2-3274|UTK2-3274]]
-- [[agents/projects/utk2-3275|UTK2-3275]]
-- [[agents/projects/utk2-3276|UTK2-3276]]
-- [[agents/projects/utk2-3295|UTK2-3295 Agent Work]]
-- [[agents/projects/utk2-3310|UTK2-3310 Agent Work]]
-- [[agents/projects/utk2-3326|UTK2-3326 Agent Work]]
-- [[agents/projects/utk2-3329|UTK2-3329 Agent Work]]
-- [[agents/projects/utk2-3339|UTK2-3339 Agent Work]]
-- [[agents/projects/utk2-3340|UTK2-3340 Agent Work]]
+- [[work/alfa-bank/tickets/utk2-3349|UTK2-3349]]
+- [[work/alfa-bank/tickets/utk2-3365|UTK2-3365]]

@@ -3,8 +3,9 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-27
-related-project:
-related-ticket:
+service: "[[personal/services/markul.arm|markul.arm]]"
+project:
+ticket:
 ---
 
 # markul.client Local Capture Image
@@ -17,7 +18,7 @@ related-ticket:
 
 - Repository: `/home/marat/dev/git/markul/Markul.Arm`
 - Local console media runner: `/home/marat/dev/git/markul/Markul.Arm/src/Presentation/Markul.Console/Processes/MediaProcess.cs`
-- Related durable notes: [[personal/markul.net/markul.arm/index|markul.arm]]
+- Related durable notes: [[personal/services/markul.arm|markul.arm]]
 
 ## Actions
 

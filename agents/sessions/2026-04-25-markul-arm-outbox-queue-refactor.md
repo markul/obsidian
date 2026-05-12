@@ -1,8 +1,11 @@
 ---
-note-type: session
+tags:
+  - agents/session
+note-type: agent-session
 session-date: 2026-04-25
-related-project:
-related-ticket:
+service: "[[personal/services/markul.arm|markul.arm]]"
+project:
+ticket:
 ---
 
 # markul.arm Outbox Queue Refactor

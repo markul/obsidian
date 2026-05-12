@@ -1,21 +1,31 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-04-02
+service: 
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
+---
+
 # 2026-04-02 my-infra-inventory-cleanup
 
 ## Goal
 
-- Turn `Infrastructure.md` into a cleaner infrastructure inventory with clearer network and service placement sections
+- Turn `infrastructure.md` into a cleaner infrastructure inventory with clearer network and service placement sections
 
 ## Scope
 
 - Agent project: [[agents/projects/my-infra|My Infra]]
 - Repo: `/home/marat/dev/git/markul/obsidian`
 - Related notes:
-  - [[personal/tech/Infrastructure|Infrastructure]]
+  - [[personal/tech/infrastructure|Infrastructure]]
   - [[personal/tech/hardware|hardware]]
   - [[personal/tech/electricity-consumption|electricity-consumption]]
 
 ## Actions
 
-- Read the existing flat machine list in [[personal/tech/Infrastructure|Infrastructure]]
+- Read the existing flat machine list in [[personal/tech/infrastructure|Infrastructure]]
 - Reorganized the note into `Overview`, `Network`, `Service Placement`, and `Machine Inventory`
 - Pulled public endpoints and LAN addresses into dedicated network sections
 - Grouped workloads by function instead of leaving everything only under per-host summaries
@@ -26,7 +36,7 @@
 
 ## Decisions
 
-- Keep [[personal/tech/Infrastructure|Infrastructure]] as the canonical inventory note instead of splitting it into multiple machine notes
+- Keep [[personal/tech/infrastructure|Infrastructure]] as the canonical inventory note instead of splitting it into multiple machine notes
 - Use service placement sections for the high-level operational view and machine sections for the detailed facts
 
 ## Follow Up

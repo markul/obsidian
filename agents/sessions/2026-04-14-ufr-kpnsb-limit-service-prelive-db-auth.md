@@ -4,8 +4,8 @@ tags:
 note-type: agent-session
 session-date: 2026-04-14
 service: "[[work/alfa-bank/services/ufr-kpnsb-limit-service|ufr-kpnsb-limit-service]]"
-related-project:
-related-ticket:
+project:
+ticket:
 ---
 
 # 2026-04-14 ufr-kpnsb-limit-service-prelive-db-auth

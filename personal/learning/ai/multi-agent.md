@@ -5,7 +5,7 @@ Agent project: [[agents/projects/opencode|OpenCode Multi-Agent]]
 
 ## Related Notes
 
-- [[personal/learning/ai/index|AI]]
+- [[personal/index|Personal]]
 - [[personal/learning/ai/second-brain|Second Brain]]
 - [[agents/projects/opencode|OpenCode Multi-Agent]]
 - [[personal/tech/software|Software]]

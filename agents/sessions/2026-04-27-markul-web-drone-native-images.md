@@ -1,8 +1,11 @@
 ---
-note-type: session
+tags:
+  - agents/session
+note-type: agent-session
 session-date: 2026-04-27
-related-project:
-related-ticket:
+service: "[[personal/services/markul.web|markul.web]]"
+project:
+ticket:
 ---
 
 # markul.web Drone Native Images
@@ -14,7 +17,7 @@ related-ticket:
 ## Scope
 
 - Repository: `/home/marat/dev/git/markul/Markul.Web`
-- Durable note: [[personal/markul.net/markul.web/index|markul.web]]
+- Durable note: [[personal/services/markul.web|markul.web]]
 
 ## Actions
 

@@ -3,8 +3,9 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-16
-related-project: "[[agents/projects/second-brain|Second Brain]]"
-related-ticket: 
+service:
+project: "[[agents/projects/second-brain|Second Brain]]"
+ticket:
 ---
 
 # 2026-04-16 ticket path flattening

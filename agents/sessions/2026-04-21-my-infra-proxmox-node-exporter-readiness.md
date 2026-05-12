@@ -3,8 +3,8 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-21
-related-project: "[[agents/projects/my-infra|My Infra]]"
-related-ticket: 
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # 2026-04-21 my-infra proxmox node-exporter readiness and install
@@ -18,7 +18,7 @@ related-ticket:
 - Agent project: [[agents/projects/my-infra|My Infra]]
 - Repo: `/home/marat/dev/git/markul/obsidian`
 - Related notes:
-  - [[personal/tech/Infrastructure|Infrastructure]]
+  - [[personal/tech/infrastructure|Infrastructure]]
   - [[personal/tech/hardware|hardware]]
   - [[daily/2026-04-21]]
 

@@ -1,11 +1,11 @@
 ---
 tags:
   - agents/session
-note-type: session
+note-type: agent-session
 session-date: 2026-04-19
 service: "[[work/alfa-bank/services/utk-mcp|utk-mcp]]"
-related-project: [[agents/projects/utk-mcp|UTK MCP]]
-related-ticket:
+project: [[agents/projects/utk-mcp|UTK MCP]]
+ticket:
 ---
 
 # Kibana Log Analysis: Multi-Service Error Chain

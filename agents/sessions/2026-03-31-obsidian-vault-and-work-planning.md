@@ -1,3 +1,12 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-03-31
+service:
+project: "[[agents/projects/second-brain|Second Brain]]"
+ticket:
+---
 # 2026-03-31 obsidian-vault-and-work-planning
 
 ## Goal
@@ -11,15 +20,14 @@
 - Repo: this Obsidian vault
 - Related notes:
   - [[daily/2026-03-31]]
-  - [[agents/projects/obsidian-vault-sync|Obsidian Vault Sync]]
-  - [[agents/projects/obsidian-vault-sync|Obsidian Vault Sync]]
+  - [[agents/projects/second-brain|Second Brain]]
 
 ## Actions
 
 - Reworked the vault layout around `agents/`, `daily/`, `personal/tech/`, and `work/`
 - Renamed files and directories to avoid spaces and updated wiki links
 - Added daily note structure and recorded the current day in [[daily/2026-03-31]]
-- Created, executed, and completed the `obsidian-vault-sync` project as personal vault work
+- Captured vault sync setup as personal vault work now owned by [[agents/projects/second-brain|Second Brain]]
 - Verified `snxctl status` before work-related actions
 - Recorded that Jira and Confluence items are work-related and should use `utk-mcp`
 - Captured today’s work intention: finish `UTK2-3264` and switch to `UTK2-3243`
@@ -27,8 +35,7 @@
 
 ## Decisions
 
-- Agent projects live under stable paths such as `agents/projects/obsidian-vault-sync/`
-- Project directories contain `project.md`, `plan.md`, and `result.md`
+- Agent projects live under stable notes in `agents/projects/`
 - File and directory names should use kebab-case without spaces
 - Vault sync is a personal vault workflow, not a work item
 - Vault sync is one-way from `optiplex.markul.net` to the MacBook

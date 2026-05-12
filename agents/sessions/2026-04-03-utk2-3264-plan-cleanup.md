@@ -1,6 +1,11 @@
 ---
 tags:
   - agents/session
+note-type: agent-session
+session-date: 2026-04-03
+service: "[[work/alfa-bank/services/ufr-kpnsb-limit-service|ufr-kpnsb-limit-service]]"
+project: "[[agents/projects/utk2-3264|UTK2-3264 agent project]]"
+ticket: "[[work/alfa-bank/tickets/utk2-3264|UTK2-3264]]"
 ---
 
 # UTK2-3264 Plan Cleanup

@@ -1,3 +1,13 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-04-02
+service: 
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
+---
+
 # 2026-04-02 my-infra-public-security-review
 
 ## Goal
@@ -9,7 +19,7 @@
 - Agent project: [[agents/projects/my-infra|My Infra]]
 - Repo: `/home/marat/dev/git/markul/obsidian`
 - Related notes:
-  - [[personal/tech/Infrastructure|Infrastructure]]
+  - [[personal/tech/infrastructure|Infrastructure]]
   - [[agents/sessions/2026-04-02-my-infra-inventory-cleanup|2026-04-02-my-infra-inventory-cleanup]]
 
 ## Actions

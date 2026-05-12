@@ -3,7 +3,6 @@ tags:
   - alfa-bank/service
 note-type: service
 service: "[[work/alfa-bank/services/ufr-kpnsb-product-request-workflow-service|ufr-kpnsb-product-request-workflow-service]]"
-status: active
 ---
 
 # ufr-kpnsb-product-request-workflow-service
@@ -24,14 +23,7 @@ status: active
 
 ## Related Projects
 
-- [[agents/projects/utk2-3243|UTK2-3243 Agent Work]]
 - [[agents/projects/utk-ai|UTK AI]]
-
-## Recent Sessions
-
-- [[agents/sessions/2026-03-31-utk2-3243-agent-work|2026-03-31 UTK2-3243 agent work]]
-- [[agents/sessions/2026-04-03-utk2-3243-on-hold|2026-04-03 UTK2-3243 on hold]]
-- [[agents/sessions/2026-04-29-utk-ai-monitoring-prototype|2026-04-29 UTK AI monitoring prototype]]
 
 ## Known Issues
 

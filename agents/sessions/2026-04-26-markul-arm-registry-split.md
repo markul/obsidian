@@ -3,9 +3,9 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-26
-related-project:
-  - "[[agents/projects/my-infra|My Infra]]"
-related-ticket:
+service: "[[personal/services/markul.arm|markul.arm]]"
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # markul.arm Registry Split
@@ -19,7 +19,7 @@ related-ticket:
 - Repository: `/home/marat/dev/git/markul/Markul.Arm`
 - CI file: `/home/marat/dev/git/markul/Markul.Arm/.drone.yml`
 - Related project: [[agents/projects/my-infra|My Infra]]
-- Related durable notes: [[personal/markul.net/markul.arm/index|markul.arm]], [[personal/tech/Infrastructure|Infrastructure]], [[personal/tech/software|Software]]
+- Related durable notes: [[personal/services/markul.arm|markul.arm]], [[personal/tech/infrastructure|Infrastructure]], [[personal/tech/software|Software]]
 
 ## Actions
 

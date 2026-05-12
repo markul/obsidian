@@ -4,8 +4,8 @@ tags:
 note-type: agent-session
 session-date: 2026-04-28
 service: "[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]"
-related-project:
-related-ticket:
+project:
+ticket:
 ---
 
 # 2026-04-28 skp-product-change-workflow-service-integration-tests

@@ -5,7 +5,7 @@ note-type: agent-project
 status: active
 created: 2026-04-02T19:22
 completed: 
-related-ticket: 
+ticket: 
 ---
 
 # My Infra
@@ -33,20 +33,35 @@ related-ticket:
 
 ## Scope
 
-- Hub note: [[personal/tech/index|Tech]]
-- Area note: [[personal/tech/Infrastructure|Infrastructure]]
+- Hub note: [[personal/index|Personal]]
+- Area note: [[personal/tech/infrastructure|Infrastructure]]
 - Related notes:
   - [[personal/tech/hardware|hardware]]
   - [[personal/tech/electricity-consumption|electricity-consumption]]
   - [[daily/2026-04-02]]
   - [[daily/2026-04-03]]
+  - [[agents/sessions/2026-04-02-my-infra-bootstrap]]
+  - [[agents/sessions/2026-04-02-my-infra-inventory-cleanup]]
+  - [[agents/sessions/2026-04-02-my-infra-public-security-review]]
+  - [[agents/sessions/2026-04-21-my-infra-proxmox-node-exporter-readiness]]
+  - [[agents/sessions/2026-04-23-helsinki-nginx-failed-loki]]
+  - [[agents/sessions/2026-04-24-infra-mtproto-proxy]]
+  - [[agents/sessions/2026-04-24-optiplex-seerr-infra-dns]]
+  - [[agents/sessions/2026-04-25-markul-docker-review]]
+  - [[agents/sessions/2026-04-25-markul-local-systemd-resolved]]
+  - [[agents/sessions/2026-04-25-media-stack-map]]
+  - [[agents/sessions/2026-04-25-optiplex-seerr-radarr-base-url]]
+  - [[agents/sessions/2026-04-26-helsinki-hub-arm-registry]]
+  - [[agents/sessions/2026-04-26-markul-arm-registry-split]]
+  - [[agents/sessions/2026-04-28-helsinki-loki-alloy-check]]
+  - [[agents/sessions/2026-04-28-helsinki-nginx-filter-frankfurt]]
 
 ## Validation
 
 ## Current State
 
 - This project is note-based inside the Obsidian vault; there is no separate `my-infra` repo tracked here
-- [[personal/tech/Infrastructure|Infrastructure]] is organized into `Overview`, `Network`, `Service Placement`, and `Machine Inventory`
+- [[personal/tech/infrastructure|Infrastructure]] is organized into `Overview`, `Network`, `Service Placement`, and `Machine Inventory`
 - Current confirmed machines include `proxmox.markul.net`, `raspberrypi.markul.net`, `dev.markul.net`, `alfa.markul.net`, `infra.markul.net`, `optiplex.markul.net`, `frankfurt.markul.net`, and `helsinki.markul.net`
 - `infra.markul.net` was re-checked live on `2026-04-24`: active compose files live under `/home/marat/docker/`, not under the tracked repo checkout path, and the host now has a dedicated `mtproto-proxy` compose project exposing `8443/tcp -> 443/tcp`
 - The media/request split is now mapped in [[personal/tech/media-stack|Media Stack]]: `infra.markul.net` runs `Prowlarr + Radarr + Sonarr + qBittorrent`, while `optiplex.markul.net` runs `Jellyfin + Jellyseerr` against shared `uid=1000` media paths; the same pass also found an unsafe live `qBittorrent` `OnTorrentAdded` remote shell hook and two world-writable media roots on `infra.markul.net`
@@ -79,7 +94,7 @@ related-ticket:
 ## Key Decisions
 
 - Keep personal infrastructure tracking in the Obsidian vault rather than creating a separate repo-specific project
-- Treat [[personal/tech/Infrastructure|Infrastructure]] as the primary machine inventory note
+- Treat [[personal/tech/infrastructure|Infrastructure]] as the primary machine inventory note
 - For the first ingress failed-request implementation, keep ingestion local on `helsinki` with `Loki + Alloy` instead of shipping raw probe logs into `dev` Elasticsearch first
 - Tail the dedicated `nginx-proxy` failed-request log instead of Docker JSON logs so successful `2xx/3xx` requests never reach Alloy
 - Treat non-`2xx/3xx` responses on the public ingress as suspicious enough for Loki retention, while keeping high-cardinality path and client details out of labels

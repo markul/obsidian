@@ -1,6 +1,11 @@
 ---
 tags:
   - agents/session
+note-type: agent-session
+session-date: 2026-04-11
+service:
+project: "[[agents/projects/second-brain|Second Brain]]"
+ticket:
 ---
 
 # 2026-04-11 ticket done project done

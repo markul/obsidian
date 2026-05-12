@@ -3,7 +3,6 @@ tags:
   - alfa-bank/service
 note-type: service
 service: "[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]"
-status: active
 ---
 
 # skp-product-change-workflow-service
@@ -28,23 +27,12 @@ status: active
 - [[work/alfa-bank/tickets/utk2-3329|UTK2-3329]]
 - [[work/alfa-bank/tickets/utk2-3339|UTK2-3339]]
 - [[work/alfa-bank/tickets/utk2-3340|UTK2-3340]]
-
-## Related Projects
-
-- [[agents/projects/utk2-3274|UTK2-3274]]
-- [[agents/projects/utk2-3275|UTK2-3275]]
-- [[agents/projects/utk2-3276|UTK2-3276]]
-- [[agents/projects/utk2-3310|UTK2-3310 Agent Work]]
-- [[agents/projects/utk2-3329|UTK2-3329 Agent Work]]
-- [[agents/projects/utk2-3339|UTK2-3339 Agent Work]]
-- [[agents/projects/utk2-3340|UTK2-3340 Agent Work]]
+- [[work/alfa-bank/tickets/utk2-3349|UTK2-3349]]
+- [[work/alfa-bank/tickets/utk2-3365|UTK2-3365]]
 
 ## Recent Sessions
 
 - [[agents/sessions/2026-04-28-skp-product-change-workflow-service-integration-tests|2026-04-28 integration tests]]
-- [[agents/sessions/2026-04-28-utk2-3329-outbound-header-filter|2026-04-28 UTK2-3329 outbound header filter]]
-- [[agents/sessions/2026-04-29-utk2-3339-skaffold-instruction|2026-04-29 UTK2-3339 Skaffold instruction]]
-- [[agents/sessions/2026-04-30-utk2-3340-cronjob-skaffold|2026-04-30 UTK2-3340 CronJob Skaffold]]
 
 ## Known Issues
 

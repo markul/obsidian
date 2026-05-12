@@ -1,13 +1,21 @@
+---
+tags:
+  - personal/service
+note-type: service
+service: "[[personal/services/markul.arm|markul.arm]]"
+---
+
 # markul.arm
 
 Reference: `/home/marat/dev/git/markul/Markul.Arm`
 
 ## Related Notes
 
-- [[personal/markul.net/index|markul.net]]
 - [[personal/tech/software|Software]]
 - [[agents/sessions/2026-04-25-markul-arm-repo-review|2026-04-25 markul.arm repo review]]
+- [[agents/sessions/2026-04-25-markul-arm-outbox-queue-refactor|2026-04-25 markul.arm outbox queue refactor]]
 - [[agents/sessions/2026-04-27-markul-client-local-capture-image|2026-04-27 markul.client local capture image]]
+- [[agents/sessions/2026-05-02-dev-markul-media-thumbnail-backfill|2026-05-02 dev markul.media thumbnail backfill]]
 
 ## Overview
 
@@ -45,3 +53,4 @@ Reference: `/home/marat/dev/git/markul/Markul.Arm`
 - The `markul.arm` name is narrower than the actual scope; this repository appears to be the main backend/device platform repo rather than only the ARM client
 - As of `2026-04-26`, Drone publishing is split by architecture: `amd64` images publish to `hub.markul.net`, `arm64` images publish to `hub-arm.markul.net`, and both sides publish `:dev` alongside versioned build tags
 - As of `2026-04-27`, the local `captureImage` failure was traced to `Markul.Console` overriding the `Markul.Media` HTTP pipeline in `MediaProcess`; the fix keeps the local outbox DB reset but moves it into a startup task so `/images` and the rest of the media endpoints stay mapped
+- On `dev.markul.net`, `markul.media` stores files in Docker volume `markul-media-storage`, mounted at `/file-storage`; public URLs are served through `https://dev-media.markul.net/static/...`

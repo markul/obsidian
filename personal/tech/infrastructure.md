@@ -2,7 +2,7 @@
 
 ## Related Notes
 
-- [[personal/tech/index|Tech]]
+- [[personal/index|Personal]]
 - [[agents/projects/my-infra|My Infra]]
 - [[personal/tech/media-stack|Media Stack]]
 - [[personal/tech/software|Software]]

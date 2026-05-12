@@ -1,6 +1,11 @@
 ---
 tags:
   - agents/session
+note-type: agent-session
+session-date: 2026-04-11
+service:
+project: "[[agents/projects/opencode|OpenCode Multi-Agent]]"
+ticket:
 ---
 
 # 2026-04-11 opencode resume

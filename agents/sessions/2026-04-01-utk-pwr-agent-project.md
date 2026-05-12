@@ -1,3 +1,13 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-04-01
+service: "[[work/alfa-bank/services/utk-pwr|utk-pwr]]"
+project: "[[agents/projects/utk-pwr|UTK PWR]]"
+ticket:
+---
+
 # 2026-04-01 utk-pwr-agent-project
 
 ## Goal

@@ -4,8 +4,8 @@ tags:
 note-type: agent-session
 session-date: 2026-04-28
 service: "[[work/alfa-bank/services/utk-ai|utk-ai]]"
-related-project: "[[agents/projects/utk-ai|UTK AI]]"
-related-ticket: 
+project: "[[agents/projects/utk-ai|UTK AI]]"
+ticket:
 ---
 
 # 2026-04-28 UTK AI Initial Plan

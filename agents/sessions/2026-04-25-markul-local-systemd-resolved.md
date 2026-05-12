@@ -1,9 +1,11 @@
 ---
-note-type: session
+tags:
+  - agents/session
+note-type: agent-session
 session-date: 2026-04-25
-related-project:
-  - "[[agents/projects/my-infra|My Infra]]"
-related-ticket:
+service:
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # Markul Local Systemd Resolved

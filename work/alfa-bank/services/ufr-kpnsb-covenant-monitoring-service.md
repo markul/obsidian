@@ -3,7 +3,6 @@ tags:
   - alfa-bank/service
 note-type: service
 service: "[[work/alfa-bank/services/ufr-kpnsb-covenant-monitoring-service|ufr-kpnsb-covenant-monitoring-service]]"
-status: observed
 ---
 
 # ufr-kpnsb-covenant-monitoring-service
@@ -20,10 +19,6 @@ status: observed
 ## Related Projects
 
 - [[agents/projects/utk-mcp|UTK MCP]]
-
-## Recent Sessions
-
-- [[agents/sessions/2026-04-19-kibana-covenant-errors|2026-04-19 Covenant monitoring errors]]
 
 ## Known Issues
 

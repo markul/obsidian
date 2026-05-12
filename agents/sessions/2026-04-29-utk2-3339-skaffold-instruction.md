@@ -4,8 +4,8 @@ tags:
 note-type: agent-session
 session-date: 2026-04-29
 service: "[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]"
-related-project: "[[agents/projects/utk2-3339|UTK2-3339 Agent Work]]"
-related-ticket: "[[work/alfa-bank/tickets/utk2-3339|UTK2-3339]]"
+project: "[[agents/projects/utk2-3339|UTK2-3339 Agent Work]]"
+ticket: "[[work/alfa-bank/tickets/utk2-3339|UTK2-3339]]"
 ---
 
 # 2026-04-29 utk2-3339-skaffold-instruction

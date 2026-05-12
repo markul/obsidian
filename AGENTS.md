@@ -13,6 +13,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - `agents/sessions/`: meaningful agent session records
 - `agents/templates/`: note templates for projects, sessions, and tasks
 - `daily/`: daily notes and lightweight chronological logs, typically as `YYYY-MM-DD.md`
+- `personal/services/`: personal service and repository notes that should be reusable from sessions, daily notes, and project indexes
 - `personal/tech/`: personal infrastructure, hardware, software inventory, upgrade planning, and benchmarks
 - `work/`: employer or client-specific notes and durable project context
 
@@ -33,6 +34,7 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Put session notes in `agents/sessions/`
 - Put agent-specific notes in `agents/{agent}/`
 - Put daily notes in `daily/`
+- Put personal service or repository reference notes under `personal/services/`
 - Put personal technical reference material under `personal/tech/`, including machine software inventory notes such as `personal/tech/software.md`
 - Put employer or client-specific material under `work/`
 - Treat Jira issues and Confluence work items as work-related by default, not personal
@@ -59,6 +61,14 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - When a durable note has several important neighbors, add a short `Related Notes` section or equivalent local links
 - When work or agent notes produce reusable knowledge, promote that understanding into a durable personal note and link the notes when useful
 - Keep service notes compact: store durable repository, local-development, operational, and cross-ticket navigation facts there, but leave detailed implementation history in ticket, project, and session notes
+- Prefer one clear navigation path over duplicate links across layers:
+  - `service -> project -> sessions` for service or repository work without a ticket
+  - `service -> ticket -> project -> sessions` for ticket-backed work
+- Do not add a direct `service -> project` link when the same service already links the ticket and that ticket links to the project
+- Do not add a direct `service -> session` or `ticket -> session` link when the session is already reachable through the project
+- Direct `service -> session` links are acceptable for service-only or notable one-off sessions that do not have a project or ticket route
+- Organization indexes such as `work/alfa-bank/index.md` should stay high-level entry points: link to services and grouped tickets, but do not duplicate ticket-backed project or session indexes
+- Daily notes should also avoid duplicate routes: if a bullet links to a ticket, do not also link to that ticket's agent project or project-backed sessions
 
 ### Agent Projects
 
@@ -66,11 +76,12 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - The canonical durable state for an agent project should stay in that single stable note even when supporting notes also exist
 - If a plan or reference grows too large for the canonical project note, it is acceptable to create a clearly named supporting note such as `agents/projects/{name}-plan.md`
 - Supporting notes must supplement, not replace, the canonical project note, and the canonical note should link to them when they matter to current work
-- Agent project notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `service`, `status`, `created`, `completed`, and `related-ticket`
+- Agent project notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `service`, `status`, `created`, `completed`, and `ticket`
 - Properties supplement markdown sections; do not remove sections like `Status`, `Timestamps`, `Goal`, `Scope`, etc.
 - In each agent project note, include `Created` and `Completed` timestamps with date and time to the minute
 - Keep agent project notes concise and durable; do not turn them into step-by-step work logs
 - When a work ticket also exists, treat the agent project note as the main durable home for active implementation context, including current state, plan, key decisions, blockers, and validation commands
+- Agent project notes should link to their related session notes in `Scope` or a local related-notes section; this is the canonical session index for that project
 - Agent project notes are expected to preserve resumable context across sessions by default; do not restate that as part of an individual project's `Goal`
 - Use this section order for agent projects unless there is a strong reason not to:
   - `Status`
@@ -93,12 +104,16 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 
 ### Daily Notes And Sessions
 
-- Keep daily notes minimal: each work item should usually be a single-line bullet with a short summary and a link to the related agent project or ticket
+- Keep daily notes minimal: each work item should usually be a single-line bullet with a short summary and one navigation link
+- For ticket-backed work, link the ticket in the daily note and let the ticket route to the project and sessions
+- For non-ticket project work, link the project in the daily note
+- Link a session directly from a daily note only for service-only or notable one-off work without a project or ticket route
 - For meaningful agent work, automatically create or update a session note under `agents/sessions/`
 - Name session notes as `YYYY-MM-DD-topic.md`
-- Session notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `session-date`, `service`, `related-project`, and `related-ticket`
+- Session notes now use Obsidian Properties in frontmatter for small, stable metadata such as `note-type`, `session-date`, `service`, `project`, and `ticket`
 - Properties supplement markdown sections; do not remove sections like `Goal`, `Scope`, `Actions`, `Decisions`, etc.
-- Every session note should link to the related agent project in its `Scope` or related-notes section when an agent project exists
+- Every session note should link to the project in its `Scope` or related-notes section when an agent project exists
+- When a session has a `project` property, make sure the project note links back to that session; avoid leaving session notes reachable only through search or frontmatter
 - Use session notes to capture the detailed chronology, commands, decisions, blockers, validation, and handoff context needed for another Codex run to resume the work
 - Frame daily and session notes around the underlying project or ticket work, not around note-editing activity; write `implemented`, `validated`, `investigated`, `triaged`, or equivalent task language instead of `updated notes`, `reviewed notes`, or `normalized notes` when the real work was technical ticket progress
 - Do not create a session note whose main purpose is vault housekeeping, note cleanup, or moving the same facts between notes; if the only work done was note maintenance, prefer updating the durable ticket or project note directly and skip the session note
@@ -112,11 +127,12 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Put only a one-line chronological trace in the daily note unless more detail is genuinely needed
 - Put only durable metadata and short pointers in work ticket notes; avoid copying active implementation context there
 - Do not repeat the same status or decision across project, session, daily, and ticket notes unless each copy serves a distinct retrieval purpose
+- Do not repeat the same navigation route across service, ticket, project, and session notes; prefer the shortest durable path that preserves discoverability
 - If a project section starts reading like a work log, move that material into a session note
 - Summarize logs, command output, and diagnostics instead of pasting long raw output unless exact text is required for future debugging
 - Skip note updates for trivial one-off work that has no likely future retrieval value
 - When backfilling missing context from existing code, branches, Jira state, or prior notes, record the reconstructed ticket or project history as part of that work item; do not describe the activity primarily as note housekeeping
-- Use the `service` property for the primary service or repository when a note clearly centers on one service, and store it as a wiki link to the canonical service note such as `[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]`. Leave it empty or omit it for broad, ambiguous, or genuinely multi-service notes.
+- Use the `service` property for the primary service or repository when a note clearly centers on one service, and store it as a wiki link to the canonical service note such as `[[personal/services/markul.web|markul.web]]` or `[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]`. Leave it empty or omit it for broad, ambiguous, or genuinely multi-service notes.
 
 ### Alfa Work
 
@@ -137,9 +153,10 @@ This repository is an Obsidian vault used to organize personal notes, work notes
 - Treat [[work/alfa-bank/tickets/utk2-3264|UTK2-3264]] as the canonical example for work ticket structure
 - Keep `Development Metadata` limited to durable implementation-tracking facts such as repository, local path, agent project, branch, commit, pull request, and build
 - Keep work ticket notes minimalistic
-- Put current implementation state, expected implementation path, schema or technical decisions, blockers, experiments, and detailed validation chronology into the related agent project and session notes instead of the ticket note
+- Put current implementation state, expected implementation path, schema or technical decisions, blockers, experiments, and detailed validation chronology into the project and session notes instead of the ticket note
 - For active tickets, it is acceptable to keep one short durable current-state bullet in `Notes` so the next reader can see the local standing immediately without opening the project note
-- In the ticket note `Notes` section, prefer a short pointer to the related agent project over repeating active working context
+- In the ticket note `Notes` section, prefer a short pointer to the project over repeating active working context
+- Ticket notes should link to the agent project, not to individual session notes, when an agent project exists
 - When Jira tickets include links, store them as clickable Markdown links with the full usable URL in the target, not partial ids or fragments; for Confluence pages, fetch the page title and use it as the link text
 - Do not restate that a note is a Jira work item inside `work/.../tickets/...`; that is implied by its location
 - For internal vault navigation to ticket notes, prefer short wiki-link aliases such as `[[work/alfa-bank/tickets/utk2-3264|UTK2-3264]]`

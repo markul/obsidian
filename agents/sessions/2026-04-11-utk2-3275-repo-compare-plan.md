@@ -1,7 +1,11 @@
 ---
 tags:
   - agents/session
+note-type: agent-session
+session-date: 2026-04-11
 service: "[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]"
+project: "[[agents/projects/utk2-3275|UTK2-3275]]"
+ticket: "[[work/alfa-bank/tickets/utk2-3275|UTK2-3275]]"
 ---
 
 # 2026-04-11 UTK2-3275 repo compare plan

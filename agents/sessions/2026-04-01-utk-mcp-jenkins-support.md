@@ -1,3 +1,13 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-04-01
+service: "[[work/alfa-bank/services/utk-mcp|utk-mcp]]"
+project: "[[agents/projects/utk-mcp|UTK MCP]]"
+ticket: "[[work/alfa-bank/tickets/utk2-3243|UTK2-3243]]"
+---
+
 # 2026-04-01 utk-mcp-jenkins-support
 
 ## Goal

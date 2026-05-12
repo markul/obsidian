@@ -4,8 +4,8 @@ tags:
 note-type: agent-session
 session-date: 2026-04-18
 service: "[[work/alfa-bank/services/utk-mcp|utk-mcp]]"
-related-project: "[[agents/projects/utk-mcp|UTK MCP]]"
-related-ticket: 
+project: "[[agents/projects/utk-mcp|UTK MCP]]"
+ticket:
 ---
 
 # 2026-04-18 UTK MCP Kibana provider

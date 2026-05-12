@@ -1,3 +1,13 @@
+---
+tags:
+  - agents/session
+note-type: agent-session
+session-date: 2026-04-01
+service: "[[work/alfa-bank/services/ufr-kpnsb-product-request-workflow-service|ufr-kpnsb-product-request-workflow-service]]"
+project: "[[agents/projects/utk2-3243|UTK2-3243 Agent Work]]"
+ticket: "[[work/alfa-bank/tickets/utk2-3243|UTK2-3243]]"
+---
+
 # 2026-04-01 utk2-3243-market-indicator-check
 
 ## Goal

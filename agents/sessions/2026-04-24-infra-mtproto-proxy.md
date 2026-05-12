@@ -3,9 +3,9 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-24
-related-project:
-  - "[[agents/projects/my-infra|My Infra]]"
-related-ticket:
+service:
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # Infra MTProto Proxy
@@ -17,7 +17,7 @@ related-ticket:
 ## Scope
 
 - Related project: [[agents/projects/my-infra|My Infra]]
-- Related durable note: [[personal/tech/Infrastructure|Infrastructure]]
+- Related durable note: [[personal/tech/infrastructure|Infrastructure]]
 - Live host: `infra.markul.net`
 - Local repo copy: `/home/marat/dev/git/markul/docker/docker-compose/infra.markul.net`
 

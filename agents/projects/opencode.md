@@ -5,7 +5,7 @@ note-type: agent-project
 status: active
 created: 2026-04-03T19:00
 completed: 
-related-ticket: 
+ticket: 
 ---
 
 # OpenCode Multi-Agent
@@ -32,10 +32,11 @@ related-ticket:
 ## Scope
 
 - Practice repo: `/home/marat/dev/git/markul/opencode`
-- Hub note: [[personal/learning/ai/index|AI]]
+- Hub note: [[personal/index|Personal]]
 - Learning note: [[personal/learning/ai/multi-agent|multi-agent]]
 - Related notes:
   - [[daily/2026-04-03]]
+  - [[agents/sessions/2026-04-11-opencode-resume]]
 
 ## Validation
 

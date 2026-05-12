@@ -3,9 +3,9 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-26
-related-project:
-  - "[[agents/projects/my-infra|My Infra]]"
-related-ticket:
+service:
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # Helsinki Hub-Arm Registry
@@ -17,7 +17,7 @@ related-ticket:
 ## Scope
 
 - Related project: [[agents/projects/my-infra|My Infra]]
-- Related durable notes: [[personal/tech/Infrastructure|Infrastructure]], [[personal/tech/software|Software]]
+- Related durable notes: [[personal/tech/infrastructure|Infrastructure]], [[personal/tech/software|Software]]
 - Source host for the sample registry: `infra.markul.net`
 - Live target host: `helsinki.markul.net`
 - Live compose path: `/home/marat/dev/git/docker/docker-compose/hub-arm`

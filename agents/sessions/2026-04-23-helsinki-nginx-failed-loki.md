@@ -3,8 +3,8 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-23
-related-project: "[[agents/projects/my-infra|My Infra]]"
-related-ticket:
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # Helsinki Nginx Failed Requests Loki

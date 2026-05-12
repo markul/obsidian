@@ -4,8 +4,8 @@ tags:
 note-type: agent-session
 session-date: 2026-04-24
 service: "[[work/alfa-bank/services/ufr-kpnsb-limit-service|ufr-kpnsb-limit-service]]"
-related-project: "[[agents/projects/utk2-3326|UTK2-3326 Agent Work]]"
-related-ticket: "[[work/alfa-bank/tickets/utk2-3326|UTK2-3326]]"
+project: "[[agents/projects/utk2-3326|UTK2-3326 Agent Work]]"
+ticket: "[[work/alfa-bank/tickets/utk2-3326|UTK2-3326]]"
 ---
 
 # 2026-04-24 ufr-kpnsb-limit-service-jenkins-1740

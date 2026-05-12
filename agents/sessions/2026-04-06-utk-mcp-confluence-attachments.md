@@ -1,7 +1,11 @@
 ---
 tags:
   - agents/session
+note-type: agent-session
+session-date: 2026-04-06
 service: "[[work/alfa-bank/services/utk-mcp|utk-mcp]]"
+project: "[[agents/projects/utk-mcp|UTK MCP]]"
+ticket:
 ---
 
 # UTK MCP Confluence Attachments

@@ -4,8 +4,8 @@ tags:
 note-type: agent-session
 session-date: 2026-04-30
 service: "[[work/alfa-bank/services/skp-product-change-workflow-service|skp-product-change-workflow-service]]"
-related-project: "[[agents/projects/utk2-3340|UTK2-3340 Agent Work]]"
-related-ticket: "[[work/alfa-bank/tickets/utk2-3340|UTK2-3340]]"
+project: "[[agents/projects/utk2-3340|UTK2-3340 Agent Work]]"
+ticket: "[[work/alfa-bank/tickets/utk2-3340|UTK2-3340]]"
 ---
 
 # 2026-04-30 UTK2-3340 CronJob Skaffold
@@ -65,11 +65,20 @@ related-ticket: "[[work/alfa-bank/tickets/utk2-3340|UTK2-3340]]"
   - `docker build --network=host` resolves `binary.alfabank.ru` to `10.212.192.4` and reaches the same `APKINDEX.tar.gz` with HTTP 200.
   - The minikube container resolves `binary.alfabank.ru` to `10.212.192.4`, so Kubernetes-side dependency image pulls can work even while ordinary Docker build/run containers still have the wrong resolver path.
   - Conclusion: the cold Skaffold run succeeding did not prove Docker default DNS is fixed; default Docker networking remains unreliable for the Alfa Alpine mirror.
+- Added the concrete Reqnroll cron job smoke test requested later in the session:
+  - `test/Skp.ProductChangeWorkflowService.Tests.Integration/Tests/ProcessPendingProductChangeRequestsCronJob.feature`
+  - `test/Skp.ProductChangeWorkflowService.Tests.Integration/Steps/CronJobSteps.cs`
+- The scenario runs the real cron job process with `dotnet Skp.ProductChangeWorkflowService.CronJob.dll process-pending-product-change-requests` and asserts only that the exit code is `0`.
+- The binding resolves `/app/cronjob` first so it matches the integration-test Kubernetes image; local fallbacks cover `TestContext.CurrentContext.TestDirectory` and the repo cron job `bin/<Configuration>/net10.0` output.
+- Validated the new feature/binding with `dotnet build test/Skp.ProductChangeWorkflowService.Tests.Integration/Skp.ProductChangeWorkflowService.Tests.Integration.csproj`; build passed.
+- Did not run the scenario locally because the integration stack was not listening on `8080`, `8090`, or `5432`.
+- Kubernetes check: `test/Skp.ProductChangeWorkflowService.Tests.Integration/Dockerfile` publishes the cron job to `/app/cronjob`, and `devops/base/k8s-pod.yaml` runs the integration-test container in the same pod as Postgres, Kafka, WireMock, auth mock, and related sidecars, so `localhost` addresses from `appsettings.Local.yaml` should resolve correctly inside the pod.
 
 ## Decisions
 
 - Use `postgresql16-client` rather than unversioned `postgresql-client`; the unversioned package was not resolvable from the tested Alpine mirrors, and the local stack uses PostgreSQL 16.
 - Keep the test container entrypoint as `dotnet test`; tests should invoke the cron job executable directly from `/app/cronjob`.
+- Keep the first cron job smoke test intentionally narrow: launch the process and assert exit code `0`; do not seed or assert database state in this scenario.
 - Use `--network=host` for local Docker image validation against Alfa package mirrors.
 - Treat local port-forward hygiene as part of the integration-test runbook; stale forwards can make Skaffold bind alternate ports while tests still call the fixed defaults.
 - A clean cold Skaffold run is dominated by NuGet restore, base image pulls, and minikube sidecar image pulls; it did not show CPU or memory pressure.
@@ -78,5 +87,5 @@ related-ticket: "[[work/alfa-bank/tickets/utk2-3340|UTK2-3340]]"
 ## Follow Up
 
 - Decide whether Skaffold local builds need an explicit host-network workaround or whether Docker daemon DNS should be fixed outside the repo so containers use the Alfa/VPN resolver for `*.alfabank.ru`.
-- If needed, add a concrete integration-test helper for running `dotnet /app/cronjob/Skp.ProductChangeWorkflowService.CronJob.dll <job-name>`.
+- Run the new `ProcessPendingProductChangeRequestsCronJob` scenario inside the Kubernetes integration pod once the local stack is available.
 - Investigate the two remaining `CheckSebResultStep` assertion failures separately from Skaffold readiness.

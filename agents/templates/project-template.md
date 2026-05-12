@@ -6,7 +6,7 @@ service:
 status: new
 created: YYYY-MM-DDTHH:MM
 completed: 
-related-ticket: 
+ticket: 
 ---
 
 # Project

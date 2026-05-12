@@ -5,7 +5,7 @@ note-type: agent-project
 status: active
 created: 2026-04-12T06:20
 completed: 
-related-ticket: 
+ticket: 
 ---
 
 # Second Brain
@@ -33,12 +33,30 @@ related-ticket:
 ## Scope
 
 - Vault: `/home/marat/dev/git/markul/obsidian`
-- Hub note: [[personal/learning/ai/index|AI]]
+- Hub note: [[personal/index|Personal]]
 - Learning note: [[personal/learning/ai/second-brain|Second Brain]]
 - Related notes:
   - [[daily/2026-04-12]]
+  - [[daily/2026-03-31]]
+  - [[agents/sessions/2026-03-31-obsidian-vault-and-work-planning]]
+  - [[agents/sessions/2026-04-03-agent-project-generic-requirements-cleanup]]
+  - [[agents/sessions/2026-04-03-agent-project-goal-cleanup]]
+  - [[agents/sessions/2026-04-03-agent-project-instructions-update]]
+  - [[agents/sessions/2026-04-03-agent-project-section-order-update]]
+  - [[agents/sessions/2026-04-03-agent-project-single-file-migration]]
+  - [[agents/sessions/2026-04-03-agent-project-validation-commands-update]]
+  - [[agents/sessions/2026-04-03-agent-project-validation-minimal-commands-update]]
+  - [[agents/sessions/2026-04-03-agent-project-validation-optional-update]]
+  - [[agents/sessions/2026-04-03-agent-project-validation-section-update]]
+  - [[agents/sessions/2026-04-03-agent-project-vpn-validation-cleanup]]
+  - [[agents/sessions/2026-04-03-obsidian-ticket-instructions-update]]
+  - [[agents/sessions/2026-04-11-ticket-done-project-done]]
   - [[agents/sessions/2026-04-12-second-brain-kickoff]]
   - [[agents/sessions/2026-04-12-second-brain-resume]]
+  - [[agents/sessions/2026-04-14-context-budget-audit]]
+  - [[agents/sessions/2026-04-14-obsidian-vault-repo-analysis]]
+  - [[agents/sessions/2026-04-16-ticket-path-flattening]]
+  - [[agents/sessions/2026-04-24-obsidian-vault-structure-review]]
   - [[agents/projects/opencode|OpenCode Multi-Agent]]
 
 ## Validation
@@ -56,6 +74,8 @@ related-ticket:
 - Removed `status/...` tags from all frontmatter; `status` property is now the canonical home for project status.
 - Added `alfa-bank/ticket` tag to all Alfa ticket notes (6 files) and the ticket template for broad filtering across Alfa work; documented in `AGENTS.md` Work Tickets section.
 - Alfa ticket notes now use a single stable `work/alfa-bank/tickets/` directory; local status lives in frontmatter and the Alfa index groups tickets by status instead of encoding status in the path.
+- Obsidian vault sync is consolidated here from the former standalone `Obsidian Vault Sync` project: the MacBook pulls `/home/marat/dev/git/markul/obsidian` from `optiplex.markul.net` to `/Users/marat/dev/git/markul/obsidian/` with one-way `rsync` over SSH.
+- The sync excludes `.git/` and `.obsidian/` and uses the same command for manual and recurring Obsidian-triggered sync.
 
 ## Key Decisions
 
@@ -64,6 +84,7 @@ related-ticket:
 - Adopt Obsidian Properties for work tickets, agent projects, and session notes to add small, stable metadata; properties supplement markdown sections and do not replace them.
 - Keep work ticket paths stable and avoid folder-based status encoding when frontmatter plus an index already captures the state cleanly.
 - Future optimization: if the properties pattern remains useful, reduce duplicated markdown metadata such as `Status`, `Timestamps`, and repeated Jira fields so properties become the canonical home for small stable facts.
+- Keep vault sync one-way: the MacBook pulls from this machine using plain `rsync` over SSH rather than a heavier sync layer.
 
 ## Blockers
 

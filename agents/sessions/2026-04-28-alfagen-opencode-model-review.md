@@ -3,8 +3,8 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-28
-related-project:
-related-ticket:
+project:
+ticket:
 ---
 
 # 2026-04-28 alfagen-opencode-model-review

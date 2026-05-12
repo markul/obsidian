@@ -3,8 +3,8 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-12
-related-project: "[[agents/projects/second-brain|Second Brain]]"
-related-ticket: 
+project: "[[agents/projects/second-brain|Second Brain]]"
+ticket:
 ---
 
 # 2026-04-12 second-brain resume

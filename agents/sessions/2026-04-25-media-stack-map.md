@@ -3,9 +3,9 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-25
-related-project:
-  - "[[agents/projects/my-infra|My Infra]]"
-related-ticket:
+service:
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # 2026-04-25 Media Stack Map
@@ -19,7 +19,7 @@ related-ticket:
 - Agent project: [[agents/projects/my-infra|My Infra]]
 - Repo: `/home/marat/dev/git/markul/obsidian`
 - Related notes:
-  - [[personal/tech/Infrastructure|Infrastructure]]
+  - [[personal/tech/infrastructure|Infrastructure]]
   - [[personal/tech/media-stack|Media Stack]]
   - [[agents/sessions/2026-04-24-infra-mtproto-proxy|Infra MTProto Proxy]]
   - [[agents/sessions/2026-04-24-optiplex-seerr-infra-dns|Optiplex Seerr Infra DNS]]
@@ -27,7 +27,7 @@ related-ticket:
 
 ## Actions
 
-- Read the durable infra notes in [[personal/tech/Infrastructure|Infrastructure]] and [[agents/projects/my-infra|My Infra]].
+- Read the durable infra notes in [[personal/tech/infrastructure|Infrastructure]] and [[agents/projects/my-infra|My Infra]].
 - Verified over SSH that the live `infra.markul.net` media compose is `/home/marat/docker/media/docker-compose.yml`.
 - Read the live `media` compose and the tracked Optiplex `jellyfin` compose.
 - Inspected the running `radarr`, `sonarr`, `qbittorrent`, and `prowlarr` containers to confirm environment, mounts, and published ports.

@@ -2,14 +2,13 @@
 
 ## Related Notes
 
-- [[personal/tech/index|Tech]]
-- [[personal/tech/Infrastructure|Infrastructure]]
-- [[personal/learning/ai/index|AI]]
+- [[personal/index|Personal]]
+- [[personal/tech/infrastructure|Infrastructure]]
 
 ## Purpose
 
 - This note tracks host-level software inventory, runtimes, and notable installed or running platform software
-- Network topology, hardware, and machine roles live in [[personal/tech/Infrastructure|Infrastructure]]
+- Network topology, hardware, and machine roles live in [[personal/tech/infrastructure|Infrastructure]]
 
 ## proxmox.markul.net
 

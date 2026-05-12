@@ -1,8 +1,10 @@
 ---
-note-type: session
+tags:
+  - agents/session
+note-type: agent-session
 session-date: 2026-04-23
-related-project:
-related-ticket:
+project:
+ticket:
 ---
 
 # Alfa VPN `snxctl` certificate validation fix

@@ -3,8 +3,9 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-14
-related-project: 
-related-ticket: 
+service:
+project: "[[agents/projects/second-brain|Second Brain]]"
+ticket:
 ---
 
 # 2026-04-14 context-budget-audit

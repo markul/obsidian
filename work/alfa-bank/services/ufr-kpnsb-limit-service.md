@@ -3,7 +3,6 @@ tags:
   - alfa-bank/service
 note-type: service
 service: "[[work/alfa-bank/services/ufr-kpnsb-limit-service|ufr-kpnsb-limit-service]]"
-status: active
 ---
 
 # ufr-kpnsb-limit-service
@@ -25,19 +24,11 @@ status: active
 - [[work/alfa-bank/tickets/utk2-3295|UTK2-3295]]
 - [[work/alfa-bank/tickets/utk2-3326|UTK2-3326]]
 
-## Related Projects
-
-- [[agents/projects/utk2-3264|UTK2-3264 Agent Work]]
-- [[agents/projects/utk2-3295|UTK2-3295 Agent Work]]
-- [[agents/projects/utk2-3326|UTK2-3326 Agent Work]]
-
 ## Recent Sessions
 
 - [[agents/sessions/2026-04-13-ufr-kpnsb-limit-service-flaky-test-stash|2026-04-13 flaky test stash]]
 - [[agents/sessions/2026-04-13-ufr-kpnsb-limit-service-jenkins-1703|2026-04-13 Jenkins 1703]]
 - [[agents/sessions/2026-04-14-ufr-kpnsb-limit-service-prelive-db-auth|2026-04-14 prelive DB auth]]
-- [[agents/sessions/2026-04-24-ufr-kpnsb-limit-service-jenkins-1740|2026-04-24 Jenkins 1740]]
-- [[agents/sessions/2026-04-27-ufr-kpnsb-limit-service-jenkins-1744-flaky-test|2026-04-27 Jenkins 1744 flaky test]]
 
 ## Known Issues
 

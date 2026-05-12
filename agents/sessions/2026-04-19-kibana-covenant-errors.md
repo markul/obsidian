@@ -1,11 +1,11 @@
 ---
 tags:
   - agents/session
-note-type: session
+note-type: agent-session
 session-date: 2026-04-19
 service: "[[work/alfa-bank/services/ufr-kpnsb-covenant-monitoring-service|ufr-kpnsb-covenant-monitoring-service]]"
-related-project: [[agents/projects/utk-mcp|UTK MCP]]
-related-ticket:
+project: [[agents/projects/utk-mcp|UTK MCP]]
+ticket:
 ---
 
 # Kibana Log Analysis: Covenant-Monitoring-Service Errors

@@ -1,20 +1,23 @@
 ---
-note-type: session
+tags:
+  - agents/session
+note-type: agent-session
 session-date: 2026-04-25
-related-project:
-related-ticket:
+service: "[[personal/services/markul.arm|markul.arm]]"
+project:
+ticket:
 ---
 
 # markul.arm Repo Review
 
 ## Goal
 
-- Review `/home/marat/dev/git/markul/Markul.Arm` and turn that review into durable personal notes under `personal/markul.net`
+- Review `/home/marat/dev/git/markul/Markul.Arm` and turn that review into durable personal service notes
 
 ## Scope
 
 - Repository: `/home/marat/dev/git/markul/Markul.Arm`
-- Durable notes: [[personal/markul.net/index|markul.net]] and [[personal/markul.net/markul.arm/index|markul.arm]]
+- Durable note: [[personal/services/markul.arm|markul.arm]]
 
 ## Actions
 

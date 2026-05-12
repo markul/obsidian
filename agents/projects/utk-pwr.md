@@ -6,7 +6,7 @@ service: "[[work/alfa-bank/services/utk-pwr|utk-pwr]]"
 status: active
 created: 2026-04-01T13:30
 completed: 
-related-ticket: 
+ticket: 
 ---
 
 # UTK PWR

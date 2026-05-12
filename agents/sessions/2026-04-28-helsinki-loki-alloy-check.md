@@ -3,8 +3,8 @@ tags:
   - agents/session
 note-type: agent-session
 session-date: 2026-04-28
-related-project: "[[agents/projects/my-infra|My Infra]]"
-related-ticket:
+project: "[[agents/projects/my-infra|My Infra]]"
+ticket:
 ---
 
 # 2026-04-28 helsinki-loki-alloy-check
